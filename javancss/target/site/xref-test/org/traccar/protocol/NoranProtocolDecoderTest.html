@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>NoranProtocolDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/NoranProtocolDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> java.nio.ByteOrder;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/NoranProtocolDecoderTest.html">NoranProtocolDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>      @Test
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          NoranProtocolDecoder decoder = <strong class="jxr_keyword">new</strong> NoranProtocolDecoder(<strong class="jxr_keyword">new</strong> NoranProtocol());
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>          verifyNull(decoder, binary(ByteOrder.LITTLE_ENDIAN,
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>                  <span class="jxr_string">"0d0a2a4b57000d000080010d0a"</span>));
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>          verifyPosition(decoder, binary(ByteOrder.LITTLE_ENDIAN,
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>                  <span class="jxr_string">"34000800010b0000000000003f43bb8da6c2ebe229424e523039423233343439000031362d30392d31352030373a30303a303700"</span>));
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>          verifyPosition(decoder, binary(ByteOrder.LITTLE_ENDIAN,
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>                  <span class="jxr_string">"28003200c380000000469458408c4ad340ad381e3f4e52303947313336303900000001ff00002041"</span>));
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>          verifyPosition(decoder, binary(ByteOrder.LITTLE_ENDIAN,
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>                  <span class="jxr_string">"28003200c38000d900fcc97a416b1a7a42b43eef3d4e523039473034383737000000000092fcda4a"</span>));
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>          verifyPosition(decoder, binary(ByteOrder.LITTLE_ENDIAN,
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>                  <span class="jxr_string">"3400080001090000000000001D43A29BE842E62520424E523039423036363932000031322D30332D30352031313A34373A343300"</span>));
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>          
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>          verifyPosition(decoder, binary(ByteOrder.LITTLE_ENDIAN,
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>                  <span class="jxr_string">"34000800010c000000000080a3438e20944149bd07c24e523039423139323832000031352d30342d32362030383a34333a353300"</span>));
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          verifyNull(decoder, binary(ByteOrder.LITTLE_ENDIAN,
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>                  <span class="jxr_string">"0f0000004e52303946303431353500"</span>));
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>          verifyPosition(decoder, binary(ByteOrder.LITTLE_ENDIAN,
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>                  <span class="jxr_string">"22000800010c008a007e9daa42317bdd41a7f3e2384e523039463034313535000000"</span>));
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          verifyPosition(decoder, binary(ByteOrder.LITTLE_ENDIAN,
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>                  <span class="jxr_string">"34000800010c0000000000001c4291251143388d17c24e523039423131303930000031342d31322d32352030303a33333a303700"</span>));
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>          
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          verifyPosition(decoder, binary(ByteOrder.LITTLE_ENDIAN,
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>                  <span class="jxr_string">"34000800010c00000000000000006520944141bd07c24e523039423139323832000031352d30342d32352030303a30333a323200"</span>));
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      }
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

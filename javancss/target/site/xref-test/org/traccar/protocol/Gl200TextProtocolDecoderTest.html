@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Gl200TextProtocolDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/Gl200TextProtocolDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/Gl200TextProtocolDecoderTest.html">Gl200TextProtocolDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>       @Test
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>       <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>          Gl200TextProtocolDecoder decoder = <strong class="jxr_keyword">new</strong> Gl200TextProtocolDecoder(<strong class="jxr_keyword">new</strong> Gl200Protocol());
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>                  <span class="jxr_string">"+RESP:GTINF,04040E,861074023747143,gv200,41,8959301000648637556f,24,0,1,0,1,4.4,0,1,0,0,20170912221854,0,00,01,-0500,1,20170912193448,1D5B$"</span>));
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>          verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>                  <span class="jxr_string">"+RESP:GTINF,210102,354524044950583,,42,89011702272048900184,11,99,0,,,4.08,0,1,1,0,0,20170831170831,87,0.00,,,,20170831171010,0064$"</span>));
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>          verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>                  <span class="jxr_string">"+RESP:GTOBD,360701,864251020253807,LSGTC58UX7Y067312,GV500,0,70FFFF,LSGTC58UX7Y067312,1,12309,983A8140,0,0,33,nan,,0,0,0,,10,0,,0,4.4,0,83.7,36.235142,49.967324,20170829112348,0255,0001,2760,9017,00,690.1,20170829112400,3456$"</span>));
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>                  <span class="jxr_string">"+RESP:GTERI,060502,861074023620928,,00000002,27822,10,1,1,0.0,84,2870.9,-78.531796,-0.277329,20170825045344,,,,,,0.0,01138:30:24,,,83,220104,2,1,28FF2776A2150308,1,FFAD,0,20170825045348,A88C$"</span>));
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>                  <span class="jxr_string">"+RESP:GTINF,280500,A1000043D20139,GL300VC,41,,31,0,0,,,3.87,0,1,1,,,20170802150751,70,,48.0,,,20170802112145,03AC$"</span>));
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>          verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>                  <span class="jxr_string">"+RESP:GTINF,2D0300,A1000043D20139,1G1JC5444R7252367,,11,,31,0,1,12986,,4.16,0,2,,,20170802145640,,,,,,+0000,0,20170802145643,CD5A$"</span>));
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>                  <span class="jxr_string">"+RESP:GTMPN,450102,865084030001323,gb100,0,1.6,0,-93.1,121.393023,31.164105,20170619103113,0460,0000,1806,2142,00,20170619103143,0512$"</span>));
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>                  <span class="jxr_string">"+RESP:GTTRI,862370030005908,1,0,99,1,0.0,354,18.5,18.821100,-34.084002,20170607152024,0655,0001,00DD,1CAE,00,0103010100,20170607172115,3E7D$"</span>));
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>                  <span class="jxr_string">"+RESP:GTERI,060800,861074023677175,,00000002,12351,10,1,1,0.0,0,2862.4,-78.467273,-0.164998,20170529181717,,,,,,0.0,00259:11:50,,,0,210104,2,1,28E17436060000E2,1,015F,0,20170529181723,2824$"</span>));
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>                  <span class="jxr_string">"+RESP:GTSWG,110100,358688000000158,,1,0,2.1,0,27.1,121.390717,31.164424,20110901073917,0460,0000,1878,0873,,20110901154653,0015$"</span>));
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>                  <span class="jxr_string">"+RESP:GTTMP,110100,358688000000158,,2,60,1,1,4.3,92,70.0,121.354335,31.222073,20110214013254,0460,0000,18d8,6141,00,80,20110214093254,000F$"</span>));
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>                  <span class="jxr_string">"+RESP:GTSTT,110100,358688000000158,,41,0,4.3,92,70.0,121.354335,31.222073,20110214013254,0460,0000,18d8,6141,,20110214093254,0022$"</span>));
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>                  <span class="jxr_string">"+RESP:GTBPL,110100,358688000000158,,3.53,0,4.3,92,70.0,121.354335,31.222073,20110214013254,0460,0000,18d8,6141,,20110214093254,001F$"</span>));
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          verifyNotNull(decoder, buffer(
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>                  <span class="jxr_string">"+BUFF:GTIGL,060228,862894020180553,,,00,1,1,3.4,199,409.6,-63.174466,-17.739317,20170407121823,0000,0000,0000,0000,00,15989.5,20170407081824,9606$"</span>));
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          verifyNotNull(decoder, buffer(
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>                  <span class="jxr_string">"+RESP:GTFRI,060228,862894020180553,,14827,10,1,1,3.4,199,409.6,-63.174466,-17.739317,20170407121823,0000,0000,0000,0000,00,15989.5,01070:43:13,13,180,0,220101,,,,20170407081824,9607$"</span>));
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>                  <span class="jxr_string">"+RESP:GTERI,060502,861074023376992,,00000002,27239,10,1,1,0.2,312,183.3,-79.320820,-2.499110,20170401212005,0740,0000,EE4E,C98F,00,0.0,02114:36:35,,,90,220504,2,0,0,20170401212007,9E3D$"</span>));
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  <span class="jxr_string">"+RESP:GTFRI,060502,861074023689626,,25202,10,1,1,0.0,0,2744.1,-78.261047,0.023452,20170401211940,,,,,,0.0,00079:19:15,,,51,110000,,,,20170401212003,4DA7$"</span>));
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>                  <span class="jxr_string">"+RESP:GTFRI,060100,135790246811220,,,00,1,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,2000.0,12345:12:34,,,80,210100,,,,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>                  <span class="jxr_string">"+RESP:GTERI,06020B,862170010196747,,00000000,,10,1,2,1.8,0,-2.5,117.198440,31.845219,20120802061037,0460,0000,5663,0358,00,0.0,,,,0,410000,20120802061040,0012$"</span>));
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>          verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>                  <span class="jxr_string">"+RESP:GTERI,060502,861074023692562,,00000002,14197,10,1,1,0.2,220,491.8,-79.064212,-2.159754,20170401212007,0740,0000,EE49,CE25,00,0.0,01509:10:58,,,87,220104,2,0,0,20170401212010,D14D$"</span>));
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>                  <span class="jxr_string">"+RESP:GTFRI,210102,354524044925825,,1,1,1,29,2.8,0,133.7,-90.203063,32.265473,20170318005208,,,,,10800,4,20170318005208,0002$"</span>));
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          verifyPositions(decoder, false, buffer(
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>                  <span class="jxr_string">"+RESP:GTFRI,210102,354524044925825,,1,1,1,,,,,,,,310,410,51bc,ca1dae6,10800,1,20170318214333,0002$"</span>));
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>                  <span class="jxr_string">"+RESP:GTGSM,400201,862365030025161,STR,0234,0015,003a,62a2,16,,0234,0015,003a,56a2,14,,0234,0015,003a,062a,13,,0234,0015,003a,32d9,11,,0234,0015,003a,56a0,11,,,,,,,,0234,0015,003a,7489,17,,20170219200048,0033$"</span>));
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>  
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>                  <span class="jxr_string">"+RESP:GTGSM,400201,862365030025161,STR,0234,0015,003a,56a2,18,,0234,0015,003a,77bc,14,,0234,0015,003a,32d9,12,,0234,0015,003a,062a,12,,0234,0015,003a,62a2,11,,0234,0015,003a,56a0,10,,0234,0015,003a,7489,15,,20170219080049,0030$"</span>));
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>  
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>                  <span class="jxr_string">"+RESP:GTGSM,400201,862365030034940,STR,0234,0030,0870,2469,19,,0234,0030,0870,35ee,18,,0234,0030,0870,16ac,12,,0234,0030,0870,16b2,11,,0234,0030,0870,360f,6,,0234,0030,0870,165d,6,,0234,0030,0870,35ef,17,,20170215220049,008D$"</span>));
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>  
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>          verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>                  <span class="jxr_string">"+RESP:GTSTR,400201,862365030034940,GL500,0,0,2,21.1,86,0,1.6,0,5.8,0.622831,51.582688,20170215090422,0234,0030,0870,35EF,,,,20170215220049,008C$"</span>));
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>                  <span class="jxr_string">"+RESP:GTFRI,2C0402,867162020000816,,0,0,1,2,0.3,337,245.7,-82.373387,34.634011,20170215003054,,,,,,63,20170215003241,3EAB$"</span>));
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>  
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          verifyNotNull(decoder, buffer(
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>                  <span class="jxr_string">"+RESP:GTWIF,210102,354524044608058,,4,c413e200ff14,-39,,,,c413e2010e55,-39,,,,c8d3ff04a837,-43,,,,42490f997c6d,-57,,,,,,,,100,20170201020055,0001$"</span>));
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>  
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          verifyNotNull(decoder, buffer(
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>                  <span class="jxr_string">"+RESP:GTWIF,210102,354524044484948,,1,08626693fb98,-36,,,,,,,,97,20170119071300,05E3$"</span>));
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>  
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>                 <span class="jxr_string">"+RESP:GTINF,210102,A100004D9EF2AE,,41,,8,99,0,17.7,21,3.58,0,1,1,0,0,20161216135038,4,,,,,20161216135038,00AB$"</span>));
+<a class="jxr_linenumber" name="L102" href="#L102">102</a> 
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>                 <span class="jxr_string">"+RESP:GTSTR,400201,862365030034957,GL500,0,0,2,23.1,5,2,0.2,0,36.0,0.623089,51.582744,20161129174625,0234,0015,03C3,3550,,,,20161129174625,0026$"</span>));
+<a class="jxr_linenumber" name="L105" href="#L105">105</a> 
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         verifyNotNull(decoder, buffer(
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>                 <span class="jxr_string">"+RESP:GTSTR,400201,862365030034957,GL500,0,1,2,21.8,100,0,,,,,,,0234,0015,03C3,3550,,,,20161129174009,0023$"</span>));
+<a class="jxr_linenumber" name="L108" href="#L108">108</a> 
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>                 <span class="jxr_string">"+RESP:GTINF,210102,A10000499AEF9B,,41,,0,0,0,15.0,9,3.87,0,1,1,0,0,20161101140211,72,,,,,20161101140211,00A3$"</span>));
+<a class="jxr_linenumber" name="L111" href="#L111">111</a> 
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>                 <span class="jxr_string">"+RESP:GTNMR,210102,A10000499AEF9B,,0,0,1,9,0.0,0,288.0,-76.902364,39.578828,20161101134145,,,,,00,73,20161101134145,009F$"</span>));
+<a class="jxr_linenumber" name="L114" href="#L114">114</a> 
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>                 <span class="jxr_string">"+RESP:GTFRI,210102,A10000499AEF9B,,0,1,1,9,0.5,0,288.0,-76.902364,39.578828,20161101134124,,,,,00,73,20161101134123,009D$"</span>));
+<a class="jxr_linenumber" name="L117" href="#L117">117</a> 
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>                 <span class="jxr_string">"+RESP:GTRTL,210102,A10000499AEF9B,,0,0,1,10,0.2,0,305.4,-76.902274,39.578517,20161101155001,,,,,00,73,20161101155001,00A6$"</span>));
+<a class="jxr_linenumber" name="L120" href="#L120">120</a> 
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>                 <span class="jxr_string">"+RESP:GTINF,110100,358688000000158,,41,898600810906F8048812,18,99,0,33.23,1,4.19,1,1,1,0,0,20110714104934,100,,,,,20110714104934,0014$"</span>));
+<a class="jxr_linenumber" name="L123" href="#L123">123</a> 
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>                 <span class="jxr_string">"+RESP:GTINF,080100,135790246811220,,16,898600810906F8048812,16,0,1,11870,,4.1,0,0,0,,20090214013254,,12340,,00,00,+0800,0,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L126" href="#L126">126</a> 
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>                 <span class="jxr_string">"+RESP:GTINF,040100,135790246811220,,16,898600810906F8048812,16,0,1,,0,4.4,0,0,0,0,20090214013254,13000,00,00,+0800,0,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L129" href="#L129">129</a> 
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>                 <span class="jxr_string">"+RESP:GTINF,060100,135790246811220,,16,898600810906F8048812,16,0,1,12000,,4.4,0,0,0,0,20090214013254,0,1300,2000,00,00,+0800,0,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L132" href="#L132">132</a> 
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>                 <span class="jxr_string">"+RESP:GTINF,1A0800,860599000773978,GL300,41,89701016426133851978,17,0,1,26.6,,3.90,1,1,0,0,0,20161003184043,69,1,44,,,20161004040811,022C$"</span>));
+<a class="jxr_linenumber" name="L135" href="#L135">135</a> 
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>                 <span class="jxr_string">"+BUFF:GTINF,1A0800,860599000773978,GL300,41,89701016426133851978,23,0,1,204.7,,3.84,1,1,0,0,0,20161006072548,62,1,38,,,20161006082343,0C98$"</span>));
+<a class="jxr_linenumber" name="L138" href="#L138">138</a> 
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>                 <span class="jxr_string">"+RESP:GTFRI,360100,864251020141408,3VWGW6AJ0FM237324,gv500,,10,1,1,0.0,0,2258.4,-99.256948,19.555800,20160929214743,0334,0020,0084,65AC,00,0.0,,,,100,410000,0,nan,,20160929214743,13BA$"</span>));
+<a class="jxr_linenumber" name="L141" href="#L141">141</a> 
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>                 <span class="jxr_string">"+RESP:GTOBD,360201,864251020186064,4T1BE46KX7U018210,,0,19FFFF,4T1BE46KX7U018210,1,14283,983901C0,799,36,18,,33792,0,0,0,,,38,,6,53557,0,0.0,0,219.5,-76.661456,39.832588,20160507132153,20160507132154,0230$"</span>));
+<a class="jxr_linenumber" name="L144" href="#L144">144</a> 
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>                 <span class="jxr_string">"+RESP:GTFRI,360201,864251020186064,1G1JC5444R7252367,,12802,10,1,0,0.0,0,219.5,-76.661456,39.832588,20160507132235,,,,,,20460.9,00080:03:37,,,100,210000,791,,56,20160507132239,0233$"</span>));
+<a class="jxr_linenumber" name="L147" href="#L147">147</a> 
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>                 <span class="jxr_string">"+RESP:GTFRI,1F0101,135790246811220,1G1JC5444R7252367,,,00,2,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,0,4.3,92,70.0,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,2000.0,12345:12:34,,,80,210100,,,50,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L150" href="#L150">150</a> 
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>                 <span class="jxr_string">"+RESP:GTFRI,1F0101,135790246811220,1G1JC5444R7252367,,,00,1,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,2000.0,12345:12:34,,92,80,210100,,,50,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L153" href="#L153">153</a> 
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>                 <span class="jxr_string">"+RESP:GTSTT,060228,862894020178276,,21,0,0.0,0,411.3,-63.169745,-17.776330,20160319132220,0736,0003,6AD4,5BAA,00,20160319092223,1FBD$"</span>));
+<a class="jxr_linenumber" name="L156" href="#L156">156</a> 
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>                 <span class="jxr_string">"+RESP:GTNMR,210102,A10000458356CE,,0,1,1,9,0.0,8,190.7,-85.765865,42.894837,20160316123202,,,,,60,30,20160316123202,0137$"</span>));
+<a class="jxr_linenumber" name="L159" href="#L159">159</a> 
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>                 <span class="jxr_string">"+RESP:GTIDA,060228,862894020178276,,,01C68011010000C7,1,1,0,0.0,0,413.0,-63.169675,-17.776349,20160317222129,0736,0003,6AD4,32CF,00,34.9,,,,,20160317182130,1626$"</span>));
+<a class="jxr_linenumber" name="L162" href="#L162">162</a> 
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>                 <span class="jxr_string">"+RESP:GTIGN,060228,862894020180553,,9860,0,0.2,189,420.0,-63.158195,-17.800608,20160309022951,0736,0003,6AD4,3471,00,,881.2,20160308222956,129A$"</span>));
+<a class="jxr_linenumber" name="L165" href="#L165">165</a> 
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>                 <span class="jxr_string">"+BUFF:GTIGF,060228,862894020180553,,1958,0,0.0,240,390.3,-63.089213,-17.764712,20160309122854,0736,0003,6AB8,5A23,00,,936.8,20160309082858,1368$"</span>));
+<a class="jxr_linenumber" name="L168" href="#L168">168</a> 
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L170" href="#L170">170</a>                 <span class="jxr_string">"+RESP:GTFRI,060228,862894020180553,,,10,1,1,20.0,147,329.7,-62.899703,-17.720434,20160309113548,0736,0003,6AAE,3381,00,913.3,,,,0,220101,,,,20160309073554,132B$"</span>));
+<a class="jxr_linenumber" name="L171" href="#L171">171</a> 
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>                 <span class="jxr_string">"+BUFF:GTFRI,060402,862894021808798,,,10,1,1,0.0,349,394.3,-63.287717,-17.662410,20160116234031,0736,0003,6ABA,8305,00,3326.8,,,,94,220100,,,,20160116194035,4D83"</span>));
+<a class="jxr_linenumber" name="L174" href="#L174">174</a> 
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>                 <span class="jxr_string">"+RESP:GTFRI,2C0204,867162020003125,GL300W,0,0,2,1,1.7,205,2867.0,-78.481127,-0.206828,20160215210433,0740,0000,7596,5891C,0.0,1,1.7,205,2867.0,-78.481127,-0.206828,20160215210503,0740,0000,7596,5891C,0.0,88,20160215210506,1E78$"</span>));
+<a class="jxr_linenumber" name="L177" href="#L177">177</a> 
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>                 <span class="jxr_string">"+RESP:GTFRI,060228,862894020178276,,15153,10,1,1,0.0,0,431.7,-63.169571,-17.776235,20160210153458,0736,0003,6AD4,80EF,00,34.9,00117:31:26,13442,15163,0,210101,,,,20160210113503,38EE$"</span>));
+<a class="jxr_linenumber" name="L180" href="#L180">180</a> 
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>                 <span class="jxr_string">"+RESP:GTFRI,110100,A5868800000015,,0,0,1,1,4.3,92,70.0,121.354335,31.222073,20110214013254,0460,0000,18d8,6141,00,80,20110214013254,000C"</span>));
+<a class="jxr_linenumber" name="L183" href="#L183">183</a> 
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>         verifyNotNull(decoder, buffer(
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>                 <span class="jxr_string">"+RESP:GTFRI,210102,A10000458356CE,,0,1,1,15,1.4,0,190.6,-85.765763,42.894896,20160208164505,4126,210,0,18673,00,92,20160208164507,00A6"</span>));
+<a class="jxr_linenumber" name="L186" href="#L186">186</a> 
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>                 <span class="jxr_string">"+BUFF:GTFRI,060402,862894021808798,,,10,1,1,0.0,349,394.3,-63.287717,-17.662410,20160116234031,0736,0003,6ABA,8305,00,3326.8,,,,94,220100,,,,20160116194035,4D83"</span>));
+<a class="jxr_linenumber" name="L189" href="#L189">189</a> 
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>                 <span class="jxr_string">"+RESP:GTIDA,06020A,862170013895931,,,D2C4FBC5,1,1,1,0.8,0,22.2,117.198630,31.845229,20120802121626,0460,0000,5663,2BB9,00,0.0,,,,,20120802121627,008E$"</span>));
+<a class="jxr_linenumber" name="L192" href="#L192">192</a> 
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>                 <span class="jxr_string">"+RESP:GTINF,1F0101,135790246811220,1G1JC5444R7252367,,16,898600810906F8048812,16,0,1,12000,,4.2,0,0,,,20090214013254,,,,,,+0800,0,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L195" href="#L195">195</a> 
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>         verifyPositions(decoder, false, buffer(
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>                 <span class="jxr_string">"+RESP:GTFRI,120113,555564055560555,,1,1,1,,,,,,,,0282,0380,f080,cabf,6900,79,20140824165629,0001$"</span>));
+<a class="jxr_linenumber" name="L198" href="#L198">198</a> 
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>                 <span class="jxr_string">"+RESP:GTFRI,0F0106,862193020451183,,,10,1,1,0.0,163,,-57.513617,-25.368191,20150918182145,,,,,,21235.0,,,,0,210100,,,,20150918182149,00B8$"</span>));
+<a class="jxr_linenumber" name="L201" href="#L201">201</a> 
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>                 <span class="jxr_string">"+RESP:GTOBD,1F0109,864251020135483,,gv500,0,78FFFF,,1,12613,,,,,,,,,,,,,,1286,0,0.0,0,17.1,3.379630,6.529701,20150813074639,0621,0030,51C0,A2B3,00,0.0,20150813074641,A7E6$"</span>));
+<a class="jxr_linenumber" name="L204" href="#L204">204</a> 
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>                 <span class="jxr_string">"+RESP:GTOBD,1F0109,864251020135483,4T1BE46KX7U018210,gv500,0,78FFFF,4T1BE46KX7U018210,1,13411,981B81C0,787,3,43,,921,463,1,10,0300030103030304001200310351035203530354,20,55,,1286,0,6.5,74,21.6,3.379710,6.529714,20150813074824,0621,0030,51C0,A2B3,00,0.0,20150813074828,A7E9$"</span>));
+<a class="jxr_linenumber" name="L207" href="#L207">207</a> 
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>                 <span class="jxr_string">"+RESP:GTSTT,1A0401,860599000508846,,41,0,0.0,84,107.5,-76.657998,39.497203,20150623160622,0310,0260,B435,3B81,,20150623160622,0F54$"</span>));
+<a class="jxr_linenumber" name="L210" href="#L210">210</a> 
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>                 <span class="jxr_string">"+RESP:GTFRI,1A0401,860599000508846,,0,0,1,1,134.8,154,278.7,-76.671089,39.778885,20150623154301,0310,0260,043F,7761,,99,20150623154314,0F24$"</span>));
+<a class="jxr_linenumber" name="L213" href="#L213">213</a> 
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>                 <span class="jxr_string">"+RESP:GTFRI,1A0200,860599000165464,CRI001,0,0,1,2,,41,,-71.153137,42.301634,20150328020301,,,,,280.3,55,20150327220351,320C"</span>));
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>         
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>                 <span class="jxr_string">"+RESP:GTFRI,02010D,867844001675407,,0,0,1,2,0.0,0,28.9,8.591011,56.476397,20140915213209,0238,0001,03CB,2871,,97,20140915213459,009A"</span>));
+<a class="jxr_linenumber" name="L219" href="#L219">219</a> 
+<a class="jxr_linenumber" name="L220" href="#L220">220</a>         verifyNull(decoder, buffer(
+<a class="jxr_linenumber" name="L221" href="#L221">221</a>                 <span class="jxr_string">"+RESP:GTINF,359464030073766,8938003990320469804f,18,99,100,1,0,+2.00,0,20131018084015,00EE,0103090402"</span>));
+<a class="jxr_linenumber" name="L222" href="#L222">222</a> 
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L224" href="#L224">224</a>                 <span class="jxr_string">"+RESP:GTFRI,04040C,359231038939904,,,10,1,2,0.0,117,346.0,8.924243,50.798077,20130618122040,0262,0002,0299,109C,00,0.0,,,,,,,,,20130618122045,00F6"</span>));
+<a class="jxr_linenumber" name="L225" href="#L225">225</a>         
+<a class="jxr_linenumber" name="L226" href="#L226">226</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L227" href="#L227">227</a>                 <span class="jxr_string">"+RESP:GTSTT,04040C,359231038939904,,42,0,0.0,117,346.0,8.924243,50.798077,20130618125152,0262,0002,0299,109C,00,20130618125154,017A"</span>));
+<a class="jxr_linenumber" name="L228" href="#L228">228</a>         
+<a class="jxr_linenumber" name="L229" href="#L229">229</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L230" href="#L230">230</a>                 <span class="jxr_string">"+RESP:GTFRI,020102,000035988863964,,0,0,1,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,,20090214093254,11F0"</span>));
+<a class="jxr_linenumber" name="L231" href="#L231">231</a> 
+<a class="jxr_linenumber" name="L232" href="#L232">232</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L233" href="#L233">233</a>                 <span class="jxr_string">"+RESP:GTFRI,020102,135790246811220,,0,0,1,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,,20090214093254,11F0"</span>));
+<a class="jxr_linenumber" name="L234" href="#L234">234</a> 
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L236" href="#L236">236</a>                 <span class="jxr_string">"+RESP:GTFRI,020102,135790246811220,,0,0,2,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,0,4.3,92,70.0,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,,20090214093254,11F0"</span>));
+<a class="jxr_linenumber" name="L237" href="#L237">237</a> 
+<a class="jxr_linenumber" name="L238" href="#L238">238</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L239" href="#L239">239</a>                 <span class="jxr_string">"+RESP:GTDOG,020102,135790246811220,,0,0,1,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,2000.0,20090214093254,11F0"</span>));
+<a class="jxr_linenumber" name="L240" href="#L240">240</a> 
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L242" href="#L242">242</a>                 <span class="jxr_string">"+RESP:GTLBC,020102,135790246811220,,+8613800000000,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,,20090214093254,11F0"</span>));
+<a class="jxr_linenumber" name="L243" href="#L243">243</a> 
+<a class="jxr_linenumber" name="L244" href="#L244">244</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L245" href="#L245">245</a>                 <span class="jxr_string">"+RESP:GTGCR,020102,135790246811220,,3,50,180,2,0.4,296,-5.4,121.391055,31.164473,20100714104934,0460,0000,1878,0873,00,,20100714104934,000C"</span>));
+<a class="jxr_linenumber" name="L246" href="#L246">246</a> 
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L248" href="#L248">248</a>                 <span class="jxr_string">"+RESP:GTFRI,07000D,868487001005941,,0,0,1,1,0.0,0,46.3,-77.039627,38.907573,20120731175232,0310,0260,B44B,EBC9,0015e96913a7,-58,,100,20120731175244,0114"</span>));
+<a class="jxr_linenumber" name="L249" href="#L249">249</a> 
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L251" href="#L251">251</a>                 <span class="jxr_string">"+RESP:GTHBM,0F0100,135790246811220,,,10,1,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,2000.0,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L252" href="#L252">252</a> 
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>         verifyPosition(decoder, buffer(
+<a class="jxr_linenumber" name="L254" href="#L254">254</a>                 <span class="jxr_string">"+RESP:GTHBM,0F0100,135790246811220,,,11,1,1,24.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,2000.0,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L255" href="#L255">255</a> 
+<a class="jxr_linenumber" name="L256" href="#L256">256</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L257" href="#L257">257</a>                 <span class="jxr_string">"+RESP:GTFRI,02010C,867844001274144,,0,0,1,1,18.0,233,118.1,7.615551,51.515600,20140106130516,0262,0007,79E6,B956,,72,20140106140524,09CE$"</span>));
+<a class="jxr_linenumber" name="L258" href="#L258">258</a>         
+<a class="jxr_linenumber" name="L259" href="#L259">259</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>                 <span class="jxr_string">"+RESP:GTFRI,02010C,867844001274649,,0,0,1,1,0.0,0,122.5,7.684216,51.524512,20140106233722,0262,0007,79EE,1D22,,93,20140107003805,03C4$"</span>));
+<a class="jxr_linenumber" name="L261" href="#L261">261</a> 
+<a class="jxr_linenumber" name="L262" href="#L262">262</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L263" href="#L263">263</a>                 <span class="jxr_string">"+BUFF:GTFRI,210101,863286020016706,,,10,1,1,,,,49.903915,40.391669,20140818105815,,,,,,,,,,,210100,,,,,000C$"</span>));
+<a class="jxr_linenumber" name="L264" href="#L264">264</a> 
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L266" href="#L266">266</a>                 <span class="jxr_string">"+RESP:GTFRI,240100,135790246811220,,,10,1,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,2000.0,12345:12:34,,80,,,,,,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L267" href="#L267">267</a> 
+<a class="jxr_linenumber" name="L268" href="#L268">268</a>         verifyPositions(decoder, buffer(
+<a class="jxr_linenumber" name="L269" href="#L269">269</a>                 <span class="jxr_string">"+RESP:GTFRI,240100,135790246811220,,,10,2,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,0,4.3,92,70.0,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,2000.0,12345:12:34,,,80,,,,,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L270" href="#L270">270</a> 
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>         verifyNotNull(decoder, buffer(
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>                 <span class="jxr_string">"+RESP:GTSTT,280100,A1000043D20139,,42,0,0.1,321,228.6,-76.660884,39.832552,20150615120628,0310,0484,00600019,0A52,,20150615085741,0320$"</span>));
+<a class="jxr_linenumber" name="L273" href="#L273">273</a> 
+<a class="jxr_linenumber" name="L274" href="#L274">274</a>         verifyNotNull(decoder, buffer(
+<a class="jxr_linenumber" name="L275" href="#L275">275</a>                 <span class="jxr_string">"+RESP:GTRTL,280100,A1000043D20139,,0,0,1,1,0.1,321,239.1,-76.661047,39.832501,20150615114455,0310,0484,00600019,0A52,,87,20150615074456,031E$"</span>));
+<a class="jxr_linenumber" name="L276" href="#L276">276</a>         
+<a class="jxr_linenumber" name="L277" href="#L277">277</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L278" href="#L278">278</a>                 <span class="jxr_string">"+BUFF:GTBPL,1A0800,860599000773978,GL300,3.55,0,0.0,0,257.1,60.565437,56.818277,20161006070553,,,,,204.7,20161006071028,0C75$"</span>));
+<a class="jxr_linenumber" name="L279" href="#L279">279</a> 
+<a class="jxr_linenumber" name="L280" href="#L280">280</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L281" href="#L281">281</a>                 <span class="jxr_string">"+RESP:GTTEM,1A0102,860599000000448,,3,33,0,5.8,0,33.4,117.201191,31.832502,20130109061410,0460,0000,5678,2079,,20130109061517,0091$"</span>));
+<a class="jxr_linenumber" name="L282" href="#L282">282</a> 
+<a class="jxr_linenumber" name="L283" href="#L283">283</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L284" href="#L284">284</a>                 <span class="jxr_string">"+RESP:GTJDR,0A0102,135790246811220,,0,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L285" href="#L285">285</a> 
+<a class="jxr_linenumber" name="L286" href="#L286">286</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L287" href="#L287">287</a>                 <span class="jxr_string">"+RESP:GTJDS,0A0102,135790246811220,,2,0,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L288" href="#L288">288</a>         
+<a class="jxr_linenumber" name="L289" href="#L289">289</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>                 <span class="jxr_string">"+RESP:GTSOS,020102,135790246811220,,0,0,1,1,4.3,92,70.0,121.354335,31.222073,20090214013254,0460,0000,18d8,6141,00,,20090214093254,11F0$"</span>));
+<a class="jxr_linenumber" name="L291" href="#L291">291</a>         
+<a class="jxr_linenumber" name="L292" href="#L292">292</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L293" href="#L293">293</a>                 <span class="jxr_string">"+RESP:GTVER,1A0800,860599000773978,GL300,GL300,0A03,0103,20161007041531,10F8$"</span>));
+<a class="jxr_linenumber" name="L294" href="#L294">294</a> 
+<a class="jxr_linenumber" name="L295" href="#L295">295</a>         verifyNull(decoder, buffer(
+<a class="jxr_linenumber" name="L296" href="#L296">296</a>                 <span class="jxr_string">"+ACK:GTHBD,1A0401,135790246811220,,20100214093254,11F0"</span>));
+<a class="jxr_linenumber" name="L297" href="#L297">297</a> 
+<a class="jxr_linenumber" name="L298" href="#L298">298</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L299" href="#L299">299</a>                 <span class="jxr_string">"+ACK:GTRTO,1A0800,860599000773978,GL300,VER,FFFF,20161006053520,0C19"</span>));
+<a class="jxr_linenumber" name="L300" href="#L300">300</a> 
+<a class="jxr_linenumber" name="L301" href="#L301">301</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L302" href="#L302">302</a>                 <span class="jxr_string">"+ACK:GTJDC,0A0102,135790246811220,,0016,20090214093254,11F0"</span>));
+<a class="jxr_linenumber" name="L303" href="#L303">303</a> 
+<a class="jxr_linenumber" name="L304" href="#L304">304</a>         verifyAttributes(decoder, buffer(
+<a class="jxr_linenumber" name="L305" href="#L305">305</a>                 <span class="jxr_string">"+ACK:GTGEO,1A0102,135790246811220,,0,0008,20100310172830,11F0"</span>));
+<a class="jxr_linenumber" name="L306" href="#L306">306</a> 
+<a class="jxr_linenumber" name="L307" href="#L307">307</a>     }
+<a class="jxr_linenumber" name="L308" href="#L308">308</a> 
+<a class="jxr_linenumber" name="L309" href="#L309">309</a> }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

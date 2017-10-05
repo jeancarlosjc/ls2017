@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>AisProtocolDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/AisProtocolDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/AisProtocolDecoderTest.html">AisProtocolDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>       @Test
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>       <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>          AisProtocolDecoder decoder = <strong class="jxr_keyword">new</strong> AisProtocolDecoder(<strong class="jxr_keyword">new</strong> AisProtocol());
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          verifyPositions(decoder, text(
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>                  <span class="jxr_string">"!AIVDM,2,1,8,A,53UlSb01l&gt;Ei=H4KF218PTpv222222222222221?8h=766gB0&lt;Ck11DTp888,0*14s:MTb827ebc7686b,c:1481688227737*4d&#92;&#92;\r\n"</span> +
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>                  <span class="jxr_string">"!AIVDM,2,2,8,A,88888888888,2*24\r\n"</span> +
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>                  <span class="jxr_string">"!AIVDM,1,1,,A,13T=Qr0P001cmmLEf;A00?wN0PSU,0*29\r\n"</span> +
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>                  <span class="jxr_string">"!AIVDM,1,1,,A,35Qf023Ohi1n5gdDRLW5FSQP00u@,0*18\r\n"</span> +
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>                  <span class="jxr_string">"!AIVDM,1,1,,A,B3P@f&gt;0000K6J;5KAIT03wpUkP06,0*5D&#92;&#92;s:MTb827ebc7686b,c:1481688230418*45&#92;&#92;\r\n"</span> +
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>                  <span class="jxr_string">"!AIVDM,1,1,,B,B52Q8a@00Ul`9N5@ssbmCwr5oP06,0*36\r\n"</span> +
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>                  <span class="jxr_string">"!AIVDM,1,1,,A,1815&lt;S@01VQnKGlE0sk:WHcT0@O4,0*78\r\n"</span> +
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>                  <span class="jxr_string">"!AIVDM,1,1,,A,35N7G;5OhQG?oJfE`G`cM9E`0001,0*6C\r\n"</span> +
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>                  <span class="jxr_string">"!AIVDM,1,1,,B,13Ug;r0P011cqHJEevuEiOwf0L3h,0*6A\r\n"</span> +
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>                  <span class="jxr_string">"!AIVDM,1,1,,A,13MKsr?0001dJC2Ee4W;jnal08Qj,0*00\r\n\r\n"</span>));
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          verifyPositions(decoder, text(
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>                  <span class="jxr_string">"!AIVDM,1,1,,A,H3FUli4T000000000000001p0400,0*6E&#92;&#92;s:MTb827eba584a8,c:1481688176110*46&#92;&#92;\r\n"</span> +
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>                  <span class="jxr_string">"!AIVDM,1,1,,B,13UhUh0P01QcoRTEdtB&gt;4?v&lt;2D=j,0*54\r\n\r\n"</span>));
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      }
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

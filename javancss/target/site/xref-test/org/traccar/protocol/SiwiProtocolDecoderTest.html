@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>SiwiProtocolDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/SiwiProtocolDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/SiwiProtocolDecoderTest.html">SiwiProtocolDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>       @Test
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>       <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>          SiwiProtocolDecoder decoder = <strong class="jxr_keyword">new</strong> SiwiProtocolDecoder(<strong class="jxr_keyword">new</strong> SiwiProtocol());
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>                  <span class="jxr_string">"$SIWI,9803932,23992,E,0,,0,1,1,0,5055,0,5,A,22.289887,70.807192,152,168,102922,090317,28,1,12,5,4098,1,0,13,0,0,0,1.0,3.1CHKS_4.82,0!"</span>));
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>                  <span class="jxr_string">"$SIWI,2845,1320,Q,10,airtelgprs.com,1,1,0,0,876578,43,9,A,19.0123456,72.65347,45,0,055929,071107,22,5,1,0,3700,1210,0,2500,1230,321,0,1.1,4.0,1!"</span>));
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>                  <span class="jxr_string">"$SIWI,9803849,953,R,9,,0,1,1,0,0,0,8,A,19.066145,73.002278,213,178,122738,210217,28,5,12,6,4066,1,0,2,0,0,0,1.0,3.1CHKS_4.82,0"</span>));
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>                  <span class="jxr_string">"$EIT,9803849,953,R,9,,0,1,1,0,0,0,8,A,19.066145,73.002278,213,178,122738,210217,28,5,12,6,4066,1,0,2,0,0,0,1.0,3.1CHKS_4.82,0"</span>));
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>                  <span class="jxr_string">"$SIWI,9803849,954,E,0,,0,1,1,0,0,0,0,V,0.000000,0.000000,0,0,122855,210217,29,5,12,5,4104,1,0,2,0,0,0,1.0,3.1CHKS_4.82,0"</span>));
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>                  <span class="jxr_string">"$SIWI,2845,1320,A,0,,1,1,0,0,876578,43,10,A,19.0123456,72.65347,45,0,055929,071107,22,5,1,0,3700,1210,0,2500,1230,321,0,1.1,4.0,1!"</span>));
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>                  <span class="jxr_string">"$SIWI,9803849,956,E,0,,0,1,1,0,0,0,3,V,19.066935,73.003383,0,111,123037,210217,28,5,12,5,4071,1,0,2,0,0,0,1.0,3.1CHKS_4.82,0"</span>));
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      }
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

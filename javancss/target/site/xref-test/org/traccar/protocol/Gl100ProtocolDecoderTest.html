@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Gl100ProtocolDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/Gl100ProtocolDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/Gl100ProtocolDecoderTest.html">Gl100ProtocolDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>       @Test
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>          Gl100ProtocolDecoder decoder = <strong class="jxr_keyword">new</strong> Gl100ProtocolDecoder(<strong class="jxr_keyword">new</strong> Gl100Protocol());
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>                  <span class="jxr_string">"+RESP:GTLGL,359464030492644,1,2,1,0,0.4,0,299.7,1,5.455551,51.449776,20160311083229,0204,0016,03EC,BD94,00,0036,0102090501"</span>));
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>                  <span class="jxr_string">"+RESP:GTTRI,359464030439249,1,0,61,1,0.0,346,-2.7,2,-80.392825,26.122424,20151214000354,0310,0260,72BC,35F5,00,04B6,0102070407"</span>));
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>                  <span class="jxr_string">"+RESP:GTTRI,135790246811220,1,0,0,1,4.3,92,70.0,1,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,11F0,0102070202"</span>));
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>                  <span class="jxr_string">"+RESP:GTTRI,135790246811220,2,0,0,1,4.3,92,70.0,1,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,1,-3.6,145,30.0,2,121.354442,31.221940,20090101000100,0460,0000,18d8,6141,00,11F0,0102070202"</span>));
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>          verifyNull(decoder, text(
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>                  <span class="jxr_string">"AT+GTHBD=HeartBeat,359231030000010,20090101000000,11F0,0102120204"</span>));
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>                  <span class="jxr_string">"+RESP:GTSOS,359231030000010,0,0,0,1,4.3,92,70.0,1,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,11F0,0102120204"</span>),
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>                  position(<span class="jxr_string">"2009-01-01 00:00:00.000"</span>, false, 31.22207, 121.35434));
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>                  <span class="jxr_string">"+RESP:GTRTL,359231030000010,0,0,0,1,4.3,92,70.0,1,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,11F0,0102120204"</span>));
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>                  <span class="jxr_string">"+RESP:GTEST,359231030000010,0,0,0,1,4.3,92,70.0,1,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,11F0,0102120204"</span>));
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>                  <span class="jxr_string">"+RESP:GTSZI,359231030000010,0,3,0,1,4.3,92,70.0,1,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,11F0,0102120204"</span>));
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>                  <span class="jxr_string">"+RESP:GTLBC,359231030000010,02132523415,1,4.3,92,70.0,1,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,11F0,0102120204"</span>));
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>                  <span class="jxr_string">"+RESP:GTTRI,359231030000010,1,0,0,1,4.3,92,70.0,1,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,11F0,0102120204"</span>));
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>                  <span class="jxr_string">"+RESP:GTTRI,359231030000010,2,0,0,1,4.3,92,70.0,1,121.354335,31.222073,20090101000000,0460,0000,18d8,6141,00,0,0,1,-3.6,145,30.0,2,121.354442,31.221940,20090101000100,0460,0000,18d8,6141,00,11F0,0102120204"</span>));
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>  
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>                  <span class="jxr_string">"+RESP:GTTRI,359464030073766,1,0,0,0,1.7,254,-27.8,3,30.474475,50.488383,20131107155511,0255,0003,6995,4761,00,0071,0103090402"</span>));
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      }
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

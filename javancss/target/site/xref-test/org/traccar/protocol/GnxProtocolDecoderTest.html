@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>GnxProtocolDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/GnxProtocolDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/GnxProtocolDecoderTest.html">GnxProtocolDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>       @Test
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>       <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>          GnxProtocolDecoder decoder = <strong class="jxr_keyword">new</strong> GnxProtocolDecoder(<strong class="jxr_keyword">new</strong> GnxProtocol());
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>                  <span class="jxr_string">"$GNX_MIF,865733022354161,143,0,172642,180316,172642,180316,1,13.034581,N,080.234521,E,0,05396274,ROUTE_2#########,Deo ############,GNX04008,B0*"</span>));
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>                  <span class="jxr_string">"$GNX_LOC,865733022352132,095,0,102134,280914,102134,280914,1,18.765432,N,073.752811,W,032,165.32,12,25,0,A,E,2,000099.9,000099.5,GNX01001,12*"</span>));
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>          verifyNull(decoder, text(
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>                  <span class="jxr_string">"$GNX_LOC,865733022354161,139,0,142838,160316,142825,160316,0,000000000,N,0000000000,E,000,0.00,00,48,0,e,C,2,000000.0,000000.0,GNX04008,BB*"</span>));
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>                  <span class="jxr_string">"$GNX_DIO,863071015071563,110,1,155627,121214,151244,121214,1,08.878321,N,076.643154,E,0,0,0,0,0,0,GNX01001,B1*"</span>));
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          verifyNull(decoder, text(
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>                  <span class="jxr_string">"$GNX_DIO,865733022354161,112,1,142849,160316,142714,160316,0,000000000,N,0000000000,E,0,0,0,0,0,0,0,GNX04008,1A*"</span>));
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>      }
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

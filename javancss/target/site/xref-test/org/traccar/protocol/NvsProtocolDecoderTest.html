@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>NvsProtocolDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/NvsProtocolDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/NvsProtocolDecoderTest.html">NvsProtocolDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>       @Test
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>       <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>          NvsProtocolDecoder decoder = <strong class="jxr_keyword">new</strong> NvsProtocolDecoder(<strong class="jxr_keyword">new</strong> NvsProtocol());
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>                  <span class="jxr_string">"0012333537303430303630303137383234312e38"</span>));
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>          verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>                  <span class="jxr_string">"0012313233343536373839303132333435312E31"</span>));
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>          verifyPositions(decoder, binary(
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>                  <span class="jxr_string">"cccccccc0073000144b9ddf2aca002015694823d1f165d80902139a44f00aa001e1400000103000a080115001a001d001e0141004001f00065001301061600001700001800004231da430000440000085000000000480000000049000000004a0000000047ffffffff6900000004c700000000e10000000100954a"</span>));
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          verifyPositions(decoder, binary(
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>                  <span class="jxr_string">"CCCCCCCC00FE00007048860DDF79020446a6f1ce010f14f650209cca80006f00d6040004010300030101150316030001460000015d0046a6f1dc0d0f14ffe0209cc580006e00c7050001010300030101150316010001460000015e0046a6f1ea0e0f150f00209cd20000950108040000010300030101150016030001460000015d0046a6f1ff0b0f150a50209cccc000930068040000010300030101150016030001460000015b006123"</span>));
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          verifyPositions(decoder, binary(
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>                  <span class="jxr_string">"cccccccc0217000144b9ddf2aca002055683f72b01165d80632139a3c800ab00ce0a00000403000a080115bf1a001d001e0141004001f00065011301061600001700001800004231a9430000440000085000000000480000000049000000004a0000000047ffffffff69000000b7c700000000e100000001005683f74901165d80632139a3c800ab012a0a00000403000a080115bf1a001d001e0141004001f00065011301061600001700001800004231a9430000440000085000000000480000000049000000004a0000000047ffffffff69000000b8c700000000e100000001005683f76801165d80632139a3c800ab00590a00000403000a080115bf1a001d001e0141004001f00065011301061600001700001800004231a9430000440000085000000000480000000049000000004a0000000047ffffffff69000000b9c700000000e100000001005683f78601165d80632139a3c800ab00c80a00000403000a080115bf1a001d001e0141004001f00065011301061600001700001800004231a9430000440000085000000000480000000049000000004a0000000047ffffffff69000000bac700000000e100000001005683f7a401165d80632139a3c800ab01310a00000403000a080115bf1a001d001e0141004001f00065011301061600001700001800004231a9430000440000085000000000480000000049000000004a0000000047ffffffff69000000bbc700000000e100000001001d72"</span>));
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>      }
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

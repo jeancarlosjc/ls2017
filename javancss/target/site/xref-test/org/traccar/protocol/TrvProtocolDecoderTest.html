@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>TrvProtocolDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/TrvProtocolDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/TrvProtocolDecoderTest.html">TrvProtocolDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>       @Test
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>       <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>          TrvProtocolDecoder decoder = <strong class="jxr_keyword">new</strong> TrvProtocolDecoder(<strong class="jxr_keyword">new</strong> TrvProtocol());
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          verifyNull(decoder, text(
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>                  <span class="jxr_string">"TRVAP00352121088015548"</span>));
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>                  <span class="jxr_string">"TRVAP01170905A5227.1382N00541.4256E001.7095844000.0008100610020100,204,8,3230,13007"</span>));
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>          verifyAttributes(decoder, text(
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>                  <span class="jxr_string">"TRVCP01,07800010010000602001206001120124"</span>));
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          verifyNull(decoder, text(
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>                  <span class="jxr_string">"IWAP00353456789012345"</span>));
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>                  <span class="jxr_string">"IWAP01080524A2232.9806N11404.9355E000.1061830323.8706000908000102,460,0,9520,3671,Home|74-DE-2B-44-88-8C|97&amp; Home1|74-DE-2B-44-88-8C|97&amp;Home2|74-DE-2B-44-88-8C|97&amp; Home3|74-DE-2B-44-88-8C|97"</span>));
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>          verifyNull(decoder, text(
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>                  <span class="jxr_string">"IWAP02,zh_cn,0,7,460,0,9520|3671|13,9520|3672|12,9520|3673|11,9520|3674|10,9520|3675|9,9520|3676|8,9520|3677|7,4,1|D8-24-BD-79-FA-1F|59&amp;2|3C-46-D8-6D-CE-01|81&amp;3|0C-4C-39-1A-7C-65|69&amp;4|70-A8-E3-5D-D7-C0|65"</span>));
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>                  <span class="jxr_string">"IWAP10080524A2232.9806N11404.9355E000.1061830323.8706000908000502,460,0,9520,3671,00,zh-cn,00,HOME|74-DE-2B-44-88-8C|97&amp;HOME1|74-DE-2B-44-88-8C|97&amp;HOME2|74-DE-2B-44-88-8C|97&amp;HOME3|74-DE-2B-44-88-8C|97"</span>));
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          verifyNull(decoder, text(
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>                  <span class="jxr_string">"IWAP03,06000908000102,5555,30"</span>));
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          verifyNull(decoder, text(
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>                  <span class="jxr_string">"TRVAP00353456789012345"</span>));
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          verifyAttributes(decoder, text(
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>                  <span class="jxr_string">"TRVCP01,06000908000102"</span>));
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          verifyAttributes(decoder, text(
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>                  <span class="jxr_string">"TRVCP01,100007100000001020151060011"</span>));
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>                  <span class="jxr_string">"TRVAP01160211A2544.5118N05553.7586E105.711185941.52010001010010000,424,030,3011,27003"</span>));
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>                  <span class="jxr_string">"TRVAP01160209A2540.8863N05546.6125E005.6075734123.7910000810010000,424,030,3012,27323"</span>));
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>                  <span class="jxr_string">"TRVAP01080524A2232.9806N11404.9355E000.1061830323.8706000908000102,460,0,9520,3671"</span>));
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>                  <span class="jxr_string">"TRVAP01080524A2232.9806N11404.9355E000.1061830323.8706000908000102,460,0,9520,3671"</span>),
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>                  position(<span class="jxr_string">"2008-05-24 06:18:30.000"</span>, <strong class="jxr_keyword">true</strong>, 22.54968, 114.08226));
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>                  <span class="jxr_string">"TRVAP10080524A2232.9806N11404.9355E000.1061830323.8706000908000502,460,0,9520,3671,00,zh-cn,00"</span>));
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>      }
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

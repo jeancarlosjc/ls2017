@@ -1,0 +1,2358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+   <duplication lines="38" tokens="230">
+      <file line="46"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="49"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(dd)(dd)(dd)")              // date (ddmmyy)
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        return position;
+    }
+
+}]]></codefragment>
+   </duplication>
+   <duplication lines="21" tokens="173">
+      <file line="87"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/L100ProtocolDecoder.java"/>
+      <file line="101"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt502ProtocolDecoder.java"/>
+      <codefragment><![CDATA[        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        position.set(Position.KEY_STATUS, parser.next());]]></codefragment>
+   </duplication>
+   <duplication lines="23" tokens="167">
+      <file line="93"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EnforaProtocolDecoder.java"/>
+      <file line="116"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsGateProtocolDecoder.java"/>
+      <codefragment><![CDATA[        Parser parser = new Parser(PATTERN, sentence);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        return position;
+    }]]></codefragment>
+   </duplication>
+   <duplication lines="19" tokens="163">
+      <file line="96"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GatorProtocolDecoder.java"/>
+      <file line="77"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/KhdProtocolDecoder.java"/>
+      <codefragment><![CDATA[            DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, "1" + id, id);
+            if (deviceSession == null) {
+                return null;
+            }
+            position.setDeviceId(deviceSession.getDeviceId());
+
+            DateBuilder dateBuilder = new DateBuilder()
+                    .setYear(BcdUtil.readInteger(buf, 2))
+                    .setMonth(BcdUtil.readInteger(buf, 2))
+                    .setDay(BcdUtil.readInteger(buf, 2))
+                    .setHour(BcdUtil.readInteger(buf, 2))
+                    .setMinute(BcdUtil.readInteger(buf, 2))
+                    .setSecond(BcdUtil.readInteger(buf, 2));
+            position.setTime(dateBuilder.getDate());
+
+            position.setLatitude(BcdUtil.readCoordinate(buf));
+            position.setLongitude(BcdUtil.readCoordinate(buf));
+            position.setSpeed(UnitsConverter.knotsFromKph(BcdUtil.readInteger(buf, 4)));
+            position.setCourse(BcdUtil.readInteger(buf, 4));]]></codefragment>
+   </duplication>
+   <duplication lines="33" tokens="160">
+      <file line="36"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HunterProProtocolDecoder.java"/>
+      <file line="36"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number(">(d+)<")                    // identifier
+            .text("$GPRMC,")
+            .number("(dd)(dd)(dd).?d*,")         // time (hhmmss)
+            .expression("([AV]),")               // validity
+            .number("(dd)(dd.d+),")              // latitude
+            .expression("([NS]),")
+            .number("(ddd)(dd.d+),")             // longitude
+            .expression("([EW]),")
+            .number("(d+.?d*)?,")                // speed
+            .number("(d+.?d*)?,")                // course
+            .number("(dd)(dd)(dd)")              // date (ddmmyy)
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        DateBuilder dateBuilder = new DateBuilder();]]></codefragment>
+   </duplication>
+   <duplication lines="24" tokens="148">
+      <file line="54"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Ardi01ProtocolDecoder.java"/>
+      <file line="86"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/WondexProtocolDecoder.java"/>
+      <codefragment><![CDATA[        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setTime(parser.nextDateTime());
+
+        position.setLongitude(parser.nextDouble(0));
+        position.setLatitude(parser.nextDouble(0));
+        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));
+        position.setCourse(parser.nextDouble(0));
+        position.setAltitude(parser.nextDouble(0));
+
+        int satellites = parser.nextInt(0);
+        position.setValid(satellites >= 3);]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="142">
+      <file line="139"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/geofence/GeofencePolygon.java"/>
+      <file line="78"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/geofence/GeofencePolyline.java"/>
+      <codefragment><![CDATA[        if (commaTokens.length < 3) {
+            throw new ParseException("Not valid content", 0);
+        }
+
+        for (String commaToken : commaTokens) {
+            String[] tokens = commaToken.trim().split("\\s");
+            if (tokens.length != 2) {
+                throw new ParseException("Here must be two coordinates: " + commaToken, 0);
+            }
+            Coordinate coordinate = new Coordinate();
+            try {
+                coordinate.setLat(Double.parseDouble(tokens[0]));
+            } catch (NumberFormatException e) {
+                throw new ParseException(tokens[0] + " is not a double", 0);
+            }
+            try {
+                coordinate.setLon(Double.parseDouble(tokens[1]));
+            } catch (NumberFormatException e) {
+                throw new ParseException(tokens[1] + " is not a double", 0);
+            }
+            coordinates.add(coordinate);
+        }]]></codefragment>
+   </duplication>
+   <duplication lines="13" tokens="140">
+      <file line="66"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ExtremTracProtocolDecoder.java"/>
+      <file line="93"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/L100ProtocolDecoder.java"/>
+      <file line="107"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt502ProtocolDecoder.java"/>
+      <codefragment><![CDATA[        position.setDeviceId(deviceSession.getDeviceId());
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());]]></codefragment>
+   </duplication>
+   <duplication lines="15" tokens="139">
+      <file line="77"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="93"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/L100ProtocolDecoder.java"/>
+      <file line="107"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt502ProtocolDecoder.java"/>
+      <codefragment><![CDATA[        position.set(Position.KEY_COMMAND, parser.next());
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        position.set(Position.PREFIX_IO + 1, parser.next());]]></codefragment>
+   </duplication>
+   <duplication lines="19" tokens="139">
+      <file line="165"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Gl200BinaryProtocolDecoder.java"/>
+      <file line="283"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Gl200BinaryProtocolDecoder.java"/>
+      <codefragment><![CDATA[                position.set(Position.KEY_SATELLITES, satellites);
+
+                int hdop = buf.readUnsignedByte();
+                position.setValid(hdop > 0);
+                position.set(Position.KEY_HDOP, hdop);
+
+                position.setSpeed(UnitsConverter.knotsFromKph(buf.readUnsignedMedium() * 0.1));
+                position.setCourse(buf.readUnsignedShort());
+                position.setAltitude(buf.readShort());
+                position.setLongitude(buf.readInt() * 0.000001);
+                position.setLatitude(buf.readInt() * 0.000001);
+
+                position.setTime(decodeTime(buf));
+
+                position.setNetwork(new Network(CellTower.from(
+                        buf.readUnsignedShort(), buf.readUnsignedShort(),
+                        buf.readUnsignedShort(), buf.readUnsignedShort())));
+
+                buf.readUnsignedByte(); // reserved]]></codefragment>
+   </duplication>
+   <duplication lines="18" tokens="137">
+      <file line="100"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EnforaProtocolDecoder.java"/>
+      <file line="66"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <codefragment><![CDATA[        position.setDeviceId(deviceSession.getDeviceId());
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        return position;
+    }
+
+}]]></codefragment>
+   </duplication>
+   <duplication lines="13" tokens="136">
+      <file line="79"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="95"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Gt30ProtocolDecoder.java"/>
+      <file line="95"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/L100ProtocolDecoder.java"/>
+      <file line="109"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt502ProtocolDecoder.java"/>
+      <codefragment><![CDATA[        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        position.set(Position.PREFIX_IO + 1, parser.next());]]></codefragment>
+   </duplication>
+   <duplication lines="17" tokens="136">
+      <file line="123"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsGateProtocolDecoder.java"/>
+      <file line="66"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <codefragment><![CDATA[            position.setDeviceId(deviceSession.getDeviceId());
+
+            DateBuilder dateBuilder = new DateBuilder()
+                    .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+            position.setValid(parser.next().equals("A"));
+            position.setLatitude(parser.nextCoordinate());
+            position.setLongitude(parser.nextCoordinate());
+            position.setSpeed(parser.nextDouble(0));
+            position.setCourse(parser.nextDouble(0));
+
+            dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+            position.setTime(dateBuilder.getDate());
+
+            return position;
+
+        } else if (sentence.startsWith("$FRCMD,")) {]]></codefragment>
+   </duplication>
+   <duplication lines="26" tokens="135">
+      <file line="47"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Ardi01ProtocolDecoder.java"/>
+      <file line="63"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/IntellitracProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(-?d+)")                    // temperature
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setTime(parser.nextDateTime());
+
+        position.setLongitude(parser.nextDouble(0));
+        position.setLatitude(parser.nextDouble(0));
+        position.setSpeed(UnitsConverter.knotsFromKph(parser.nextDouble(0)));]]></codefragment>
+   </duplication>
+   <duplication lines="13" tokens="133">
+      <file line="77"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="66"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ExtremTracProtocolDecoder.java"/>
+      <codefragment><![CDATA[        position.set(Position.KEY_COMMAND, parser.next());
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());]]></codefragment>
+   </duplication>
+   <duplication lines="13" tokens="131">
+      <file line="68"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ExtremTracProtocolDecoder.java"/>
+      <file line="90"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/MegastekProtocolDecoder.java"/>
+      <codefragment><![CDATA[        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        return position;]]></codefragment>
+   </duplication>
+   <duplication lines="13" tokens="131">
+      <file line="93"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Gt30ProtocolDecoder.java"/>
+      <file line="88"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/MegastekProtocolDecoder.java"/>
+      <codefragment><![CDATA[        }
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());]]></codefragment>
+   </duplication>
+   <duplication lines="11" tokens="130">
+      <file line="79"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="95"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/L100ProtocolDecoder.java"/>
+      <file line="90"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/MegastekProtocolDecoder.java"/>
+      <file line="109"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt502ProtocolDecoder.java"/>
+      <codefragment><![CDATA[        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());]]></codefragment>
+   </duplication>
+   <duplication lines="11" tokens="130">
+      <file line="68"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ExtremTracProtocolDecoder.java"/>
+      <file line="95"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Gt30ProtocolDecoder.java"/>
+      <codefragment><![CDATA[        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());]]></codefragment>
+   </duplication>
+   <duplication lines="16" tokens="127">
+      <file line="102"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EnforaProtocolDecoder.java"/>
+      <file line="68"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="87"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/RitiProtocolDecoder.java"/>
+      <file line="71"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <codefragment><![CDATA[        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        return position;
+    }
+
+}]]></codefragment>
+   </duplication>
+   <duplication lines="15" tokens="126">
+      <file line="125"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsGateProtocolDecoder.java"/>
+      <file line="87"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/RitiProtocolDecoder.java"/>
+      <codefragment><![CDATA[            DateBuilder dateBuilder = new DateBuilder()
+                    .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+            position.setValid(parser.next().equals("A"));
+            position.setLatitude(parser.nextCoordinate());
+            position.setLongitude(parser.nextCoordinate());
+            position.setSpeed(parser.nextDouble(0));
+            position.setCourse(parser.nextDouble(0));
+
+            dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+            position.setTime(dateBuilder.getDate());
+
+            return position;
+
+        } else if (sentence.startsWith("$FRCMD,")) {]]></codefragment>
+   </duplication>
+   <duplication lines="13" tokens="124">
+      <file line="100"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EnforaProtocolDecoder.java"/>
+      <file line="123"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsGateProtocolDecoder.java"/>
+      <file line="66"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <file line="91"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tlt2hProtocolDecoder.java"/>
+      <codefragment><![CDATA[        position.setDeviceId(deviceSession.getDeviceId());
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());]]></codefragment>
+   </duplication>
+   <duplication lines="13" tokens="124">
+      <file line="85"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/RitiProtocolDecoder.java"/>
+      <file line="119"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/T55ProtocolDecoder.java"/>
+      <codefragment><![CDATA[        }
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());]]></codefragment>
+   </duplication>
+   <duplication lines="11" tokens="123">
+      <file line="102"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EnforaProtocolDecoder.java"/>
+      <file line="125"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsGateProtocolDecoder.java"/>
+      <file line="68"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="71"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <file line="121"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/T55ProtocolDecoder.java"/>
+      <codefragment><![CDATA[        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());]]></codefragment>
+   </duplication>
+   <duplication lines="11" tokens="123">
+      <file line="87"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/RitiProtocolDecoder.java"/>
+      <file line="93"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tlt2hProtocolDecoder.java"/>
+      <codefragment><![CDATA[        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());]]></codefragment>
+   </duplication>
+   <duplication lines="24" tokens="122">
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/DishaProtocolDecoder.java"/>
+      <file line="46"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GotopProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .text("*")
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.next().equals("A"));
+
+        position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS_DMY));]]></codefragment>
+   </duplication>
+   <duplication lines="12" tokens="121">
+      <file line="96"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/L100ProtocolDecoder.java"/>
+      <file line="94"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tlt2hProtocolDecoder.java"/>
+      <codefragment><![CDATA[                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        position.set(Position.KEY_STATUS, parser.next());]]></codefragment>
+   </duplication>
+   <duplication lines="24" tokens="120">
+      <file line="48"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArknavProtocolDecoder.java"/>
+      <file line="45"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GotopProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(dd)-(dd)-(dd),")           // date (dd-mm-yy)
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());]]></codefragment>
+   </duplication>
+   <duplication lines="15" tokens="120">
+      <file line="103"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EnforaProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HunterProProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="88"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/RitiProtocolDecoder.java"/>
+      <file line="72"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <codefragment><![CDATA[                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        return position;
+    }
+
+}]]></codefragment>
+   </duplication>
+   <duplication lines="25" tokens="120">
+      <file line="51"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsMarkerProtocolDecoder.java"/>
+      <file line="65"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Stl060ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(ddd)")                     // temperature
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));
+
+        position.setValid(true);]]></codefragment>
+   </duplication>
+   <duplication lines="12" tokens="119">
+      <file line="80"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="96"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Gt30ProtocolDecoder.java"/>
+      <file line="110"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt502ProtocolDecoder.java"/>
+      <file line="94"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tlt2hProtocolDecoder.java"/>
+      <codefragment><![CDATA[                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        position.set(Position.PREFIX_IO + 1, parser.next());]]></codefragment>
+   </duplication>
+   <duplication lines="14" tokens="119">
+      <file line="126"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsGateProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HunterProProtocolDecoder.java"/>
+      <codefragment><![CDATA[                    .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+            position.setValid(parser.next().equals("A"));
+            position.setLatitude(parser.nextCoordinate());
+            position.setLongitude(parser.nextCoordinate());
+            position.setSpeed(parser.nextDouble(0));
+            position.setCourse(parser.nextDouble(0));
+
+            dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+            position.setTime(dateBuilder.getDate());
+
+            return position;
+
+        } else if (sentence.startsWith("$FRCMD,")) {]]></codefragment>
+   </duplication>
+   <duplication lines="15" tokens="117">
+      <file line="103"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EnforaProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ExtremTracProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HunterProProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="88"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/RitiProtocolDecoder.java"/>
+      <file line="72"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <codefragment><![CDATA[                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        return position;
+    }
+
+}]]></codefragment>
+   </duplication>
+   <duplication lines="23" tokens="116">
+      <file line="49"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArknavProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/DishaProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());]]></codefragment>
+   </duplication>
+   <duplication lines="16" tokens="116">
+      <file line="93"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EnforaProtocolDecoder.java"/>
+      <file line="116"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsGateProtocolDecoder.java"/>
+      <file line="115"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tk102ProtocolDecoder.java"/>
+      <codefragment><![CDATA[        Parser parser = new Parser(PATTERN, sentence);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));]]></codefragment>
+   </duplication>
+   <duplication lines="13" tokens="116">
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ExtremTracProtocolDecoder.java"/>
+      <file line="126"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsGateProtocolDecoder.java"/>
+      <codefragment><![CDATA[                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        return position;
+    }]]></codefragment>
+   </duplication>
+   <duplication lines="10" tokens="116">
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HunterProProtocolDecoder.java"/>
+      <file line="122"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/T55ProtocolDecoder.java"/>
+      <file line="94"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tlt2hProtocolDecoder.java"/>
+      <codefragment><![CDATA[        dateBuilder.setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());]]></codefragment>
+   </duplication>
+   <duplication lines="19" tokens="115">
+      <file line="45"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/DmtHttpProtocolDecoder.java"/>
+      <file line="41"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/OwnTracksProtocolDecoder.java"/>
+      <codefragment><![CDATA[    public DmtHttpProtocolDecoder(DmtHttpProtocol protocol) {
+        super(protocol);
+    }
+
+    private void sendResponse(Channel channel, HttpResponseStatus status) {
+        if (channel != null) {
+            HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, status);
+            response.headers().add(HttpHeaders.Names.CONTENT_LENGTH, 0);
+            channel.write(response);
+        }
+    }
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        HttpRequest request = (HttpRequest) msg;
+        JsonObject root = Json.createReader(
+                new StringReader(request.getContent().toString(StandardCharsets.US_ASCII))).readObject();]]></codefragment>
+   </duplication>
+   <duplication lines="25" tokens="115">
+      <file line="62"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/IntellitracProtocolDecoder.java"/>
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Xt013ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .groupEnd("?")
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setTime(parser.nextDateTime());
+
+        position.setLongitude(parser.nextDouble(0));]]></codefragment>
+   </duplication>
+   <duplication lines="24" tokens="115">
+      <file line="51"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/JpKorjarProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Xt013ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(x+),")                     // cid
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setTime(parser.nextDateTime());
+
+        position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="114">
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="54"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EasyTrackProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .expression("&Y([^&]*)").optional()  // adc
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_COMMAND, parser.next());]]></codefragment>
+   </duplication>
+   <duplication lines="12" tokens="114">
+      <file line="103"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EnforaProtocolDecoder.java"/>
+      <file line="126"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsGateProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HunterProProtocolDecoder.java"/>
+      <file line="91"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/MegastekProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="88"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/RitiProtocolDecoder.java"/>
+      <file line="72"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <codefragment><![CDATA[                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());
+
+        return position;]]></codefragment>
+   </duplication>
+   <duplication lines="10" tokens="113">
+      <file line="80"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="103"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EnforaProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ExtremTracProtocolDecoder.java"/>
+      <file line="126"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsGateProtocolDecoder.java"/>
+      <file line="96"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Gt30ProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HunterProProtocolDecoder.java"/>
+      <file line="96"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/L100ProtocolDecoder.java"/>
+      <file line="91"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/MegastekProtocolDecoder.java"/>
+      <file line="69"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="110"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt502ProtocolDecoder.java"/>
+      <file line="88"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/RitiProtocolDecoder.java"/>
+      <file line="72"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <file line="122"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/T55ProtocolDecoder.java"/>
+      <file line="94"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tlt2hProtocolDecoder.java"/>
+      <codefragment><![CDATA[                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+
+        position.setValid(parser.next().equals("A"));
+        position.setLatitude(parser.nextCoordinate());
+        position.setLongitude(parser.nextCoordinate());
+        position.setSpeed(parser.nextDouble(0));
+        position.setCourse(parser.nextDouble(0));
+
+        dateBuilder.setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));
+        position.setTime(dateBuilder.getDate());]]></codefragment>
+   </duplication>
+   <duplication lines="24" tokens="111">
+      <file line="47"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Ardi01ProtocolDecoder.java"/>
+      <file line="63"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/IntellitracProtocolDecoder.java"/>
+      <file line="51"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/JpKorjarProtocolDecoder.java"/>
+      <file line="44"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/TopflytechProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Xt013ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(-?d+)")                    // temperature
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setTime(parser.nextDateTime());
+
+        position.setLongitude(parser.nextDouble(0));]]></codefragment>
+   </duplication>
+   <duplication lines="24" tokens="111">
+      <file line="57"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/AutoGradeProtocolDecoder.java"/>
+      <file line="46"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ExtremTracProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("O(xxxx)")
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setDateReverse(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="111">
+      <file line="49"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CradlepointProtocolDecoder.java"/>
+      <file line="52"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsMarkerProtocolDecoder.java"/>
+      <file line="66"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Stl060ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .expression("([^,]+)?")              // wan ip
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setTime(parser.nextDateTime(Parser.DateTimeFormat.HMS));]]></codefragment>
+   </duplication>
+   <duplication lines="23" tokens="111">
+      <file line="51"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsMarkerProtocolDecoder.java"/>
+      <file line="62"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/IntellitracProtocolDecoder.java"/>
+      <file line="65"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Stl060ProtocolDecoder.java"/>
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Xt013ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(ddd)")                     // temperature
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setTime(parser.nextDateTime(Parser.DateTimeFormat.DMY_HMS));]]></codefragment>
+   </duplication>
+   <duplication lines="24" tokens="110">
+      <file line="52"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EasyTrackProtocolDecoder.java"/>
+      <file line="44"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GotopProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(x+),?")                    // odometer
+            .number("(d+)?")                     // altitude
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_COMMAND, parser.next());]]></codefragment>
+   </duplication>
+   <duplication lines="23" tokens="110">
+      <file line="46"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HunterProProtocolDecoder.java"/>
+      <file line="49"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(dd)(dd)(dd)")              // date (ddmmyy)
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        DateBuilder dateBuilder = new DateBuilder();]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="109">
+      <file line="124"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/AquilaProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SiwiProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("xx")                        // checksum
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_EVENT, parser.nextInt(0));]]></codefragment>
+   </duplication>
+   <duplication lines="23" tokens="109">
+      <file line="48"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArknavProtocolDecoder.java"/>
+      <file line="45"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GotopProtocolDecoder.java"/>
+      <file line="53"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tr900ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(dd)-(dd)-(dd),")           // date (dd-mm-yy)
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.next().equals("A"));]]></codefragment>
+   </duplication>
+   <duplication lines="23" tokens="109">
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArnaviProtocolDecoder.java"/>
+      <file line="53"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EasyTrackProtocolDecoder.java"/>
+      <file line="52"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HaicomProtocolDecoder.java"/>
+      <file line="47"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ManPowerProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(dd)(dd)(dd)")              // date (ddmmyy)
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_INDEX, parser.nextInt(0));]]></codefragment>
+   </duplication>
+   <duplication lines="23" tokens="109">
+      <file line="50"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EskyProtocolDecoder.java"/>
+      <file line="63"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FifotrackProtocolDecoder.java"/>
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SiwiProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(d+)")                      // voltage
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_SATELLITES, parser.nextInt());]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="108">
+      <file line="54"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArnaviProtocolDecoder.java"/>
+      <file line="45"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HunterProProtocolDecoder.java"/>
+      <file line="45"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(d+.d+),")                  // course
+            .number("(dd)(dd)(dd)")              // date (ddmmyy)
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="108">
+      <file line="45"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ExtremTracProtocolDecoder.java"/>
+      <file line="54"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SiwiProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(d+.?d*),")                 // course
+            .number("(dd)(dd)(dd),")             // date (ddmmyy)
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="107">
+      <file line="47"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Ardi01ProtocolDecoder.java"/>
+      <file line="49"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CradlepointProtocolDecoder.java"/>
+      <file line="52"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsMarkerProtocolDecoder.java"/>
+      <file line="63"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/IntellitracProtocolDecoder.java"/>
+      <file line="51"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/JpKorjarProtocolDecoder.java"/>
+      <file line="66"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Stl060ProtocolDecoder.java"/>
+      <file line="44"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/TopflytechProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Xt013ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(-?d+)")                    // temperature
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setTime(parser.nextDateTime());]]></codefragment>
+   </duplication>
+   <duplication lines="23" tokens="107">
+      <file line="48"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArknavProtocolDecoder.java"/>
+      <file line="43"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FreedomProtocolDecoder.java"/>
+      <file line="45"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GotopProtocolDecoder.java"/>
+      <file line="53"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tr900ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(dd)-(dd)-(dd),")           // date (dd-mm-yy)
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.next().equals("A"));]]></codefragment>
+   </duplication>
+   <duplication lines="24" tokens="107">
+      <file line="44"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FreedomProtocolDecoder.java"/>
+      <file line="60"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tt8850ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(true);
+
+        position.setTime(parser.nextDateTime());]]></codefragment>
+   </duplication>
+   <duplication lines="43" tokens="106">
+      <file line="89" path="/tmp/guest-kr2jto/traccar/src/org/traccar/model/Server.java"/>
+      <file line="86" path="/tmp/guest-kr2jto/traccar/src/org/traccar/model/User.java"/>
+      <codefragment><![CDATA[    }
+
+    private double latitude;
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    private double longitude;
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    private int zoom;
+
+    public int getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(int zoom) {
+        this.zoom = zoom;
+    }
+
+    private boolean twelveHourFormat;
+
+    public boolean getTwelveHourFormat() {
+        return twelveHourFormat;
+    }
+
+    public void setTwelveHourFormat(boolean twelveHourFormat) {
+        this.twelveHourFormat = twelveHourFormat;
+    }
+
+    private boolean forceSettings;]]></codefragment>
+   </duplication>
+   <duplication lines="23" tokens="106">
+      <file line="123"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/AquilaProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/PretraceProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .text("*")
+            .number("xx")                        // checksum
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_EVENT, parser.nextInt(0));]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="106">
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArnaviProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="53"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HaicomProtocolDecoder.java"/>
+      <file line="48"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ManPowerProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_INDEX, parser.nextInt(0));]]></codefragment>
+   </duplication>
+   <duplication lines="19" tokens="106">
+      <file line="53"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GotopProtocolDecoder.java"/>
+      <file line="68"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tr20ProtocolDecoder.java"/>
+      <codefragment><![CDATA[        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.next().equals("A"));
+
+        position.setTime(parser.nextDateTime());
+
+        position.setLatitude(parser.nextCoordinate(Parser.CoordinateFormat.DEG_HEM));]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="105">
+      <file line="124"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/AquilaProtocolDecoder.java"/>
+      <file line="51"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EskyProtocolDecoder.java"/>
+      <file line="64"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FifotrackProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("xx")                        // checksum
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_EVENT, parser.nextInt(0));]]></codefragment>
+   </duplication>
+   <duplication lines="23" tokens="105">
+      <file line="48"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArknavProtocolDecoder.java"/>
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArnaviProtocolDecoder.java"/>
+      <file line="53"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EasyTrackProtocolDecoder.java"/>
+      <file line="43"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FreedomProtocolDecoder.java"/>
+      <file line="45"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GotopProtocolDecoder.java"/>
+      <file line="51"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsMarkerProtocolDecoder.java"/>
+      <file line="52"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HaicomProtocolDecoder.java"/>
+      <file line="62"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/IntellitracProtocolDecoder.java"/>
+      <file line="47"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ManPowerProtocolDecoder.java"/>
+      <file line="65"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Stl060ProtocolDecoder.java"/>
+      <file line="53"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tr900ProtocolDecoder.java"/>
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Xt013ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(dd)-(dd)-(dd),")           // date (dd-mm-yy)
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.next().equals("A"));]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="105">
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/DishaProtocolDecoder.java"/>
+      <file line="54"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tr900ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .text("*")
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.next().equals("A"));]]></codefragment>
+   </duplication>
+   <duplication lines="23" tokens="105">
+      <file line="50"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EskyProtocolDecoder.java"/>
+      <file line="63"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FifotrackProtocolDecoder.java"/>
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/MaestroProtocolDecoder.java"/>
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SiwiProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(d+)")                      // voltage
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_SATELLITES, parser.nextInt());]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="105">
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/MaestroProtocolDecoder.java"/>
+      <file line="57"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/PretraceProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.nextInt(0) == 1);]]></codefragment>
+   </duplication>
+   <duplication lines="16" tokens="104">
+      <file line="64"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/LaipacProtocolDecoder.java"/>
+      <file line="181"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/UlbotechProtocolDecoder.java"/>
+      <codefragment><![CDATA[        Parser parser = new Parser(PATTERN, sentence);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        DateBuilder dateBuilder = new DateBuilder()
+                .setTime(parser.nextInt(0), parser.nextInt(0), parser.nextInt(0));]]></codefragment>
+   </duplication>
+   <duplication lines="21" tokens="103">
+      <file line="48"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArknavProtocolDecoder.java"/>
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArnaviProtocolDecoder.java"/>
+      <file line="53"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EasyTrackProtocolDecoder.java"/>
+      <file line="43"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FreedomProtocolDecoder.java"/>
+      <file line="45"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GotopProtocolDecoder.java"/>
+      <file line="51"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsMarkerProtocolDecoder.java"/>
+      <file line="47"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsmtaProtocolDecoder.java"/>
+      <file line="52"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HaicomProtocolDecoder.java"/>
+      <file line="46"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HunterProProtocolDecoder.java"/>
+      <file line="62"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/IntellitracProtocolDecoder.java"/>
+      <file line="47"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ManPowerProtocolDecoder.java"/>
+      <file line="46"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="49"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <file line="65"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Stl060ProtocolDecoder.java"/>
+      <file line="53"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tr900ProtocolDecoder.java"/>
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Xt013ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(dd)-(dd)-(dd),")           // date (dd-mm-yy)
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="103">
+      <file line="49"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArknavProtocolDecoder.java"/>
+      <file line="46"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GotopProtocolDecoder.java"/>
+      <file line="54"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tr900ProtocolDecoder.java"/>
+      <file line="60"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tt8850ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.next().equals("A"));]]></codefragment>
+   </duplication>
+   <duplication lines="21" tokens="103">
+      <file line="57"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/AutoGradeProtocolDecoder.java"/>
+      <file line="50"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EskyProtocolDecoder.java"/>
+      <file line="46"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ExtremTracProtocolDecoder.java"/>
+      <file line="63"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FifotrackProtocolDecoder.java"/>
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/MaestroProtocolDecoder.java"/>
+      <file line="55"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SiwiProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("O(xxxx)")
+            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="103">
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/DishaProtocolDecoder.java"/>
+      <file line="44"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FreedomProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .text("*")
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.next().equals("A"));]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="102">
+      <file line="49"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArknavProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="44"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FreedomProtocolDecoder.java"/>
+      <file line="46"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GotopProtocolDecoder.java"/>
+      <file line="52"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsMarkerProtocolDecoder.java"/>
+      <file line="63"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/IntellitracProtocolDecoder.java"/>
+      <file line="66"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Stl060ProtocolDecoder.java"/>
+      <file line="54"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tr900ProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Xt013ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setValid(parser.next().equals("A"));]]></codefragment>
+   </duplication>
+   <duplication lines="19" tokens="102">
+      <file line="67"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FifotrackProtocolDecoder.java"/>
+      <file line="95"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/VtfmsProtocolDecoder.java"/>
+      <codefragment><![CDATA[    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_ALARM, parser.next());]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="101">
+      <file line="124"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/AquilaProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/MaestroProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("xx")                        // checksum
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_EVENT, parser.nextInt(0));]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="101">
+      <file line="47"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Ardi01ProtocolDecoder.java"/>
+      <file line="49"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArknavProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArnaviProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="49"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CradlepointProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/DishaProtocolDecoder.java"/>
+      <file line="54"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EasyTrackProtocolDecoder.java"/>
+      <file line="44"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FreedomProtocolDecoder.java"/>
+      <file line="46"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GotopProtocolDecoder.java"/>
+      <file line="52"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsMarkerProtocolDecoder.java"/>
+      <file line="53"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HaicomProtocolDecoder.java"/>
+      <file line="63"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/IntellitracProtocolDecoder.java"/>
+      <file line="51"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/JpKorjarProtocolDecoder.java"/>
+      <file line="48"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ManPowerProtocolDecoder.java"/>
+      <file line="66"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Stl060ProtocolDecoder.java"/>
+      <file line="44"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/TopflytechProtocolDecoder.java"/>
+      <file line="54"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tr900ProtocolDecoder.java"/>
+      <file line="60"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Tt8850ProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Xt013ProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .number("(-?d+)")                    // temperature
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setTime(parser.nextDateTime());]]></codefragment>
+   </duplication>
+   <duplication lines="22" tokens="101">
+      <file line="51"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EskyProtocolDecoder.java"/>
+      <file line="64"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/FifotrackProtocolDecoder.java"/>
+      <file line="57"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/PretraceProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SiwiProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .any()
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_SATELLITES, parser.nextInt());]]></codefragment>
+   </duplication>
+   <duplication lines="19" tokens="100">
+      <file line="127"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/AquilaProtocolDecoder.java"/>
+      <file line="54"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EskyProtocolDecoder.java"/>
+      <file line="59"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SiwiProtocolDecoder.java"/>
+      <file line="95"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/VtfmsProtocolDecoder.java"/>
+      <codefragment><![CDATA[    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_EVENT, parser.nextInt(0));]]></codefragment>
+   </duplication>
+   <duplication lines="19" tokens="100">
+      <file line="59"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ArnaviProtocolDecoder.java"/>
+      <file line="59"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="57"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/EasyTrackProtocolDecoder.java"/>
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HaicomProtocolDecoder.java"/>
+      <file line="70"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/KenjiProtocolDecoder.java"/>
+      <file line="51"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/ManPowerProtocolDecoder.java"/>
+      <codefragment><![CDATA[    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.set(Position.KEY_INDEX, parser.nextInt(0));]]></codefragment>
+   </duplication>
+   <duplication lines="20" tokens="100">
+      <file line="56"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/CarTrackProtocolDecoder.java"/>
+      <file line="48"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/GpsmtaProtocolDecoder.java"/>
+      <file line="47"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/HunterProProtocolDecoder.java"/>
+      <file line="47"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/Pt3000ProtocolDecoder.java"/>
+      <file line="50"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/SanavProtocolDecoder.java"/>
+      <codefragment><![CDATA[            .expression("&Y([^&]*)").optional()  // adc
+            .compile();
+
+    @Override
+    protected Object decode(
+            Channel channel, SocketAddress remoteAddress, Object msg) throws Exception {
+
+        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());]]></codefragment>
+   </duplication>
+   <duplication lines="19" tokens="100">
+      <file line="70"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/IntellitracProtocolDecoder.java"/>
+      <file line="86"
+            path="/tmp/guest-kr2jto/traccar/src/org/traccar/protocol/WondexProtocolDecoder.java"/>
+      <codefragment><![CDATA[        Parser parser = new Parser(PATTERN, (String) msg);
+        if (!parser.matches()) {
+            return null;
+        }
+
+        Position position = new Position();
+        position.setProtocol(getProtocolName());
+
+        DeviceSession deviceSession = getDeviceSession(channel, remoteAddress, parser.next());
+        if (deviceSession == null) {
+            return null;
+        }
+        position.setDeviceId(deviceSession.getDeviceId());
+
+        position.setTime(parser.nextDateTime());
+
+        position.setLongitude(parser.nextDouble(0));
+        position.setLatitude(parser.nextDouble(0));
+        position.setSpeed(parser.nextDouble(0));]]></codefragment>
+   </duplication>
+</pmd-cpd>

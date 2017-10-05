@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>WatchProtocolEncoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/WatchProtocolEncoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Assert;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> org.traccar.model.Command;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/WatchProtocolEncoderTest.html">WatchProtocolEncoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>      @Test
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testEncode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          WatchProtocolEncoder encoder = <strong class="jxr_keyword">new</strong> WatchProtocolEncoder();
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>          
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>          Command command;
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>          command = <strong class="jxr_keyword">new</strong> Command();
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>          command.setDeviceId(1);
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>          command.setType(Command.TYPE_REBOOT_DEVICE);
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>          Assert.assertEquals(<span class="jxr_string">"[CS*123456789012345*0005*RESET]"</span>, encoder.encodeCommand(command));
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          command = <strong class="jxr_keyword">new</strong> Command();
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>          command.setDeviceId(1);
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>          command.setType(Command.TYPE_SOS_NUMBER);
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          command.set(Command.KEY_INDEX, 1);
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>          command.set(Command.KEY_PHONE, <span class="jxr_string">"123456789"</span>);
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>          Assert.assertEquals(<span class="jxr_string">"[CS*123456789012345*000e*SOS1,123456789]"</span>, encoder.encodeCommand(command));
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>          command = <strong class="jxr_keyword">new</strong> Command();
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>          command.setDeviceId(1);
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          command.setType(Command.TYPE_VOICE_MESSAGE);
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>          command.set(Command.KEY_DATA, <span class="jxr_string">"3333"</span>);
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          Assert.assertEquals(<span class="jxr_string">"[CS*123456789012345*0005*TK,33]"</span>, encoder.encodeCommand(command));
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>          command = <strong class="jxr_keyword">new</strong> Command();
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>          command.setDeviceId(1);
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          command.setType(Command.TYPE_CUSTOM);
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>          command.set(Command.KEY_DATA, <span class="jxr_string">"WORK,6-9,11-13,13-15,17-19"</span>);
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          Assert.assertEquals(<span class="jxr_string">"[CS*123456789012345*001a*WORK,6-9,11-13,13-15,17-19]"</span>, encoder.encodeCommand(command));
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>          command = <strong class="jxr_keyword">new</strong> Command();
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          command.setDeviceId(1);
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          command.setType(Command.TYPE_SET_TIMEZONE);
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          command.set(Command.KEY_TIMEZONE, <span class="jxr_string">"Europe/Amsterdam"</span>);
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>          Assert.assertEquals(<span class="jxr_string">"[CS*123456789012345*0006*LZ,,+1]"</span>, encoder.encodeCommand(command));
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          command.set(Command.KEY_TIMEZONE, <span class="jxr_string">"GMT+01:30"</span>);
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          Assert.assertEquals(<span class="jxr_string">"[CS*123456789012345*0008*LZ,,+1.5]"</span>, encoder.encodeCommand(command));
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          command.set(Command.KEY_TIMEZONE, <span class="jxr_string">"Atlantic/Azores"</span>);
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          Assert.assertEquals(<span class="jxr_string">"[CS*123456789012345*0006*LZ,,-1]"</span>, encoder.encodeCommand(command));
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          command.set(Command.KEY_TIMEZONE, <span class="jxr_string">"GMT-11:30"</span>);
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>          Assert.assertEquals(<span class="jxr_string">"[CS*123456789012345*0009*LZ,,-11.5]"</span>, encoder.encodeCommand(command));
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>      }
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

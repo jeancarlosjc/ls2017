@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>AstraProtocolDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/AstraProtocolDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/AstraProtocolDecoderTest.html">AstraProtocolDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>       @Test
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>       <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>          AstraProtocolDecoder decoder = <strong class="jxr_keyword">new</strong> AstraProtocolDecoder(<strong class="jxr_keyword">new</strong> AstraProtocol());
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          verifyPositions(decoder, binary(
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>                  <span class="jxr_string">"4b00700529c0c265976b8202cba9ff00676d864554a9c30000000020073401006436000300030008000000000000a0000100001920c43d00009600428302cba9ff00676d864554aa3e000000002007240100643b000300020008000000000000b0000100001920c43d00009600420f0e"</span>));
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>          verifyPositions(decoder, binary(
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>                  <span class="jxr_string">"4b00320524c1da58769e6d0322617effe874024453065600a800000100080000643e0000000000000000000000069500e7bb"</span>));
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>          verifyPositions(decoder, binary(
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>                  <span class="jxr_string">"4b013c02213aec35c501ad031368b8ffcd1ad043e5c4500c79000100003101005c490c001c0009020200020015069600ae03136801ffcd1af143e5c452125e000100003101005c491200090011010000020015068500af0313629effcd1f4b43e5c45d1e46000100003101005c491e00080409040500040015068700b0031359d5ffcd35ad43e5c47b2a3b000001003101005c492a1b1a0d0b0f0b00080015068700b103134984ffcd4b1e43e5c4913354000100003101005c49340b0103090606000f0015067700b203132e1affcd5a5a43e5c4af3348000001003101005c4935070a08000a070017001505f700b30313192cffcd7af143e5c4cd3733000001003101005c4937091206050a0800200015058600b403130debffcda88743e5c4eb2c3e000001003101005c493707030601080600290015058600b377"</span>));
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>      }
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

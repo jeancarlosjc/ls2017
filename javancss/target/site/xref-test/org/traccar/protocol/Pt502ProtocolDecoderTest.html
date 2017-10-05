@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Pt502ProtocolDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/Pt502ProtocolDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/Pt502ProtocolDecoderTest.html">Pt502ProtocolDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>       @Test
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>       <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>          Pt502ProtocolDecoder decoder = <strong class="jxr_keyword">new</strong> Pt502ProtocolDecoder(<strong class="jxr_keyword">new</strong> Pt502Protocol());
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>                  <span class="jxr_string">"$POS,865328026243864,151105.000,A,1332.7096,N,204.6787,E,0.0,10.00,050517,,,A/00000,10/1,0/234//FD9/"</span>));
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>          verifyNull(decoder, text(
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>                  <span class="jxr_string">"$FUS865328026243864,510-V1.12,A11-V3.0"</span>));
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>                  <span class="jxr_string">"$HDA,20007,134657.000,A,0626.1607,N,00330.2245,E,33.38,81.79,041016,,,A/00010,00000/270,0,0,0/19948900//fa4//"</span>));
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>                  <span class="jxr_string">"$HDB,20007,134708.000,A,0626.1759,N,00330.3192,E,26.55,80.37,041016,,,A/00010,00000/23b,0,0,0/19949100//fa4//"</span>));
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>                  <span class="jxr_string">"$POS,20007,134704.000,A,0626.1698,N,00330.2870,E,31.23,79.58,041016,,,A/00010,00000/26c,0,0,0/19949100//fa4//#"</span>));
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>                  <span class="jxr_string">"$PHO6608,115099,133140.000,A,1307.1238,N,05936.4194,W,0.00,21.50,290816,,,A/00010,00000/0,0,0,0/185100//f59/"</span>));
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>                  <span class="jxr_string">"$DFR,40456789,083125.000,A,2232.0971,N,11400.9504,E,0.0,5.00,090714,,,A/00000,00/0,0/200076//FE7/"</span>));
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>                  <span class="jxr_string">"$FDA,40456789,083125.000,A,2232.0971,N,11400.9504,E,0.0,5.00,090714,,,A/00000,00/0,0/200076//FE7/"</span>));
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>          
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>                  <span class="jxr_string">"$POS,216769295715,163237.000,A,3258.1738,S,02755.4350,E,0.00,215.88,100915,,,A/0000,0//232300//5b3/"</span>),
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>                  position(<span class="jxr_string">"2015-09-10 16:32:37.000"</span>, <strong class="jxr_keyword">true</strong>, -32.96956, 27.92392));
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>                  <span class="jxr_string">"$POS,11023456,033731.000,A,0335.2617,N,09841.1587,E,0.00,88.12,210615,,,A/0000,0/1f8/388900//f33//"</span>));
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>                  <span class="jxr_string">"$POS,6094,205523.000,A,1013.6223,N,06728.4248,W,0.0,99.3,011112,,,A/00000,00000/0/23895000//"</span>));
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>                  <span class="jxr_string">"$POS,6120,233326.000,V,0935.1201,N,06914.6933,W,0.00,,151112,,,A/00000,00000/0/0/"</span>));
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>                  <span class="jxr_string">"$POS,6002,233257.000,A,0931.0430,N,06912.8707,W,0.05,146.98,141112,,,A/00010,00000/0/5360872"</span>));
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>                  <span class="jxr_string">"$POS,6095,233344.000,V,0933.0451,N,06912.3360,W,,,151112,,,N/00000,00000/0/1677600/"</span>));
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>                  <span class="jxr_string">"$PHO0,6091,233606.000,A,0902.9855,N,06944.3654,W,0.0,43.8,141112,,,A/00010,00000/0/224000//"</span>));
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>                  <span class="jxr_string">"$POS,353451000164,082405.000,A,1254.8501,N,10051.6752,E,0.00,237.99,160513,,,A/0000,0/0/55000//a71/"</span>));
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>                  <span class="jxr_string">"$POS,012896008586486,154215.000,A,0118.0143,S,03646.9144,E,0.00,83.29,180714,,,A/0000,0/0/29200//644/"</span>));
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          verifyPosition(decoder, text(
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>                  <span class="jxr_string">"$POS,1151000,205326.000,A,0901.3037,N,07928.2751,W,48.79,30.55,170814,,,A/00010,10000/0,0,0,0/15986500//fb8/"</span>));
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      }
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

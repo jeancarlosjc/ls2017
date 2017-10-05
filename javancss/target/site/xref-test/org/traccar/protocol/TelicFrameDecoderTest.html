@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>TelicFrameDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/TelicFrameDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.jboss.netty.buffer.ChannelBuffer;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.junit.Assert;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> java.nio.ByteOrder;
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/TelicFrameDecoderTest.html">TelicFrameDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>      @Test
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>          TelicFrameDecoder decoder = <strong class="jxr_keyword">new</strong> TelicFrameDecoder();
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>          verifyFrame(
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>                  binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"303032363230333339337c3232367c31307c303032303034303130"</span>),
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"303032363230333339337c3232367c31307c30303230303430313000"</span>)));
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>          verifyFrame(
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>                  binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"3030333032303333393332352c3139303331373038333035322c302c3138303331373130333132372c3235393932342c3434353133332c332c302c302c392c2c2c39332c31323231303134312c2c303031302c30302c34302c3234302c302c30343036"</span>),
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"630000003030333032303333393332352c3139303331373038333035322c302c3138303331373130333132372c3235393932342c3434353133332c332c302c302c392c2c2c39332c31323231303134312c2c303031302c30302c34302c3234302c302c3034303600"</span>)));
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          verifyFrame(
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>                  binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"303032363239363231385343434530315f534343457c3232367c31307c30323637"</span>),
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"303032363239363231385343434530315f534343457c3232367c31307c3032363700"</span>)));
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>          verifyFrame(
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>                  binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"30303434323936323138544c4f43303236372c30302c3031313030393030303239363231382c3139303331373038333033362c3235353137382c3434353037322c332c302c38322c2c2c2c3136382c31343734313239362c2c30302c30302c302c323137"</span>),
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"6400000030303434323936323138544c4f43303236372c30302c3031313030393030303239363231382c3139303331373038333033362c3235353137382c3434353037322c332c302c38322c2c2c2c3136382c31343734313239362c2c30302c30302c302c32313700"</span>)));
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          verifyNull(
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"00303032363937393238317c3233327c30337c30303230303430313000"</span>)));
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>          verifyFrame(
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>                  binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"303032363937393238317c3233327c30337c303032303034303130"</span>),
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"303032363937393238317c3233327c30337c30303230303430313000"</span>)));
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          verifyFrame(
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>                  binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"3030323039373932383139392c3231303231363038313930302c302c3231303231363038313835392c3031333839333338352c34363635383639352c332c302c302c382c2c2c3534312c36313239382c2c303030302c30302c302c3139362c302c30343037"</span>),
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(ByteOrder.LITTLE_ENDIAN, <span class="jxr_string">"650000003030323039373932383139392c3231303231363038313930302c302c3231303231363038313835392c3031333839333338352c34363635383639352c332c302c302c382c2c2c3534312c36313239382c2c303030302c30302c302c3139362c302c3034303700"</span>)));
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      }
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

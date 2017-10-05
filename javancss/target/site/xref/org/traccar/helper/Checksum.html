@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Checksum xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../apidocs/org/traccar/helper/Checksum.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Copyright 2012 - 2015 Anton Tananaev (anton@traccar.org)</em>
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> * Licensed under the Apache License, Version 2.0 (the "License");</em>
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> * you may not use this file except in compliance with the License.</em>
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> * You may obtain a copy of the License at</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *     <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> * Unless required by applicable law or agreed to in writing, software</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> * distributed under the License is distributed on an "AS IS" BASIS,</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_comment"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_comment"> * See the License for the specific language governing permissions and</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_comment"> * limitations under the License.</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> */</em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> org.traccar.helper;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> java.nio.ByteBuffer;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> java.nio.charset.StandardCharsets;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> java.util.zip.CRC32;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/helper/Checksum.html">Checksum</a> {
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">private</strong> <a href="../../../org/traccar/helper/Checksum.html">Checksum</a>() {
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>      }
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong>[] CRC16_CCITT_TABLE_REVERSE = {
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>          0x0000, 0x1189, 0x2312, 0x329B, 0x4624, 0x57AD, 0x6536, 0x74BF,
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>          0x8C48, 0x9DC1, 0xAF5A, 0xBED3, 0xCA6C, 0xDBE5, 0xE97E, 0xF8F7,
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>          0x1081, 0x0108, 0x3393, 0x221A, 0x56A5, 0x472C, 0x75B7, 0x643E,
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          0x9CC9, 0x8D40, 0xBFDB, 0xAE52, 0xDAED, 0xCB64, 0xF9FF, 0xE876,
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>          0x2102, 0x308B, 0x0210, 0x1399, 0x6726, 0x76AF, 0x4434, 0x55BD,
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          0xAD4A, 0xBCC3, 0x8E58, 0x9FD1, 0xEB6E, 0xFAE7, 0xC87C, 0xD9F5,
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          0x3183, 0x200A, 0x1291, 0x0318, 0x77A7, 0x662E, 0x54B5, 0x453C,
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>          0xBDCB, 0xAC42, 0x9ED9, 0x8F50, 0xFBEF, 0xEA66, 0xD8FD, 0xC974,
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>          0x4204, 0x538D, 0x6116, 0x709F, 0x0420, 0x15A9, 0x2732, 0x36BB,
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          0xCE4C, 0xDFC5, 0xED5E, 0xFCD7, 0x8868, 0x99E1, 0xAB7A, 0xBAF3,
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>          0x5285, 0x430C, 0x7197, 0x601E, 0x14A1, 0x0528, 0x37B3, 0x263A,
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          0xDECD, 0xCF44, 0xFDDF, 0xEC56, 0x98E9, 0x8960, 0xBBFB, 0xAA72,
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          0x6306, 0x728F, 0x4014, 0x519D, 0x2522, 0x34AB, 0x0630, 0x17B9,
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>          0xEF4E, 0xFEC7, 0xCC5C, 0xDDD5, 0xA96A, 0xB8E3, 0x8A78, 0x9BF1,
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          0x7387, 0x620E, 0x5095, 0x411C, 0x35A3, 0x242A, 0x16B1, 0x0738,
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          0xFFCF, 0xEE46, 0xDCDD, 0xCD54, 0xB9EB, 0xA862, 0x9AF9, 0x8B70,
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          0x8408, 0x9581, 0xA71A, 0xB693, 0xC22C, 0xD3A5, 0xE13E, 0xF0B7,
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>          0x0840, 0x19C9, 0x2B52, 0x3ADB, 0x4E64, 0x5FED, 0x6D76, 0x7CFF,
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          0x9489, 0x8500, 0xB79B, 0xA612, 0xD2AD, 0xC324, 0xF1BF, 0xE036,
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          0x18C1, 0x0948, 0x3BD3, 0x2A5A, 0x5EE5, 0x4F6C, 0x7DF7, 0x6C7E,
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          0xA50A, 0xB483, 0x8618, 0x9791, 0xE32E, 0xF2A7, 0xC03C, 0xD1B5,
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          0x2942, 0x38CB, 0x0A50, 0x1BD9, 0x6F66, 0x7EEF, 0x4C74, 0x5DFD,
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          0xB58B, 0xA402, 0x9699, 0x8710, 0xF3AF, 0xE226, 0xD0BD, 0xC134,
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          0x39C3, 0x284A, 0x1AD1, 0x0B58, 0x7FE7, 0x6E6E, 0x5CF5, 0x4D7C,
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          0xC60C, 0xD785, 0xE51E, 0xF497, 0x8028, 0x91A1, 0xA33A, 0xB2B3,
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          0x4A44, 0x5BCD, 0x6956, 0x78DF, 0x0C60, 0x1DE9, 0x2F72, 0x3EFB,
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>          0xD68D, 0xC704, 0xF59F, 0xE416, 0x90A9, 0x8120, 0xB3BB, 0xA232,
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          0x5AC5, 0x4B4C, 0x79D7, 0x685E, 0x1CE1, 0x0D68, 0x3FF3, 0x2E7A,
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>          0xE70E, 0xF687, 0xC41C, 0xD595, 0xA12A, 0xB0A3, 0x8238, 0x93B1,
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          0x6B46, 0x7ACF, 0x4854, 0x59DD, 0x2D62, 0x3CEB, 0x0E70, 0x1FF9,
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          0xF78F, 0xE606, 0xD49D, 0xC514, 0xB1AB, 0xA022, 0x92B9, 0x8330,
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          0x7BC7, 0x6A4E, 0x58D5, 0x495C, 0x3DE3, 0x2C6A, 0x1EF1, 0x0F78
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      };
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong>[] CRC16_CCITT_TABLE = {
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50A5, 0x60C6, 0x70E7,
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          0x8108, 0x9129, 0xA14A, 0xB16B, 0xC18C, 0xD1AD, 0xE1CE, 0xF1EF,
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          0x1231, 0x0210, 0x3273, 0x2252, 0x52B5, 0x4294, 0x72F7, 0x62D6,
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>          0x9339, 0x8318, 0xB37B, 0xA35A, 0xD3BD, 0xC39C, 0xF3FF, 0xE3DE,
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          0x2462, 0x3443, 0x0420, 0x1401, 0x64E6, 0x74C7, 0x44A4, 0x5485,
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          0xA56A, 0xB54B, 0x8528, 0x9509, 0xE5EE, 0xF5CF, 0xC5AC, 0xD58D,
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          0x3653, 0x2672, 0x1611, 0x0630, 0x76D7, 0x66F6, 0x5695, 0x46B4,
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>          0xB75B, 0xA77A, 0x9719, 0x8738, 0xF7DF, 0xE7FE, 0xD79D, 0xC7BC,
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          0x48C4, 0x58E5, 0x6886, 0x78A7, 0x0840, 0x1861, 0x2802, 0x3823,
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          0xC9CC, 0xD9ED, 0xE98E, 0xF9AF, 0x8948, 0x9969, 0xA90A, 0xB92B,
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          0x5AF5, 0x4AD4, 0x7AB7, 0x6A96, 0x1A71, 0x0A50, 0x3A33, 0x2A12,
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          0xDBFD, 0xCBDC, 0xFBBF, 0xEB9E, 0x9B79, 0x8B58, 0xBB3B, 0xAB1A,
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          0x6CA6, 0x7C87, 0x4CE4, 0x5CC5, 0x2C22, 0x3C03, 0x0C60, 0x1C41,
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          0xEDAE, 0xFD8F, 0xCDEC, 0xDDCD, 0xAD2A, 0xBD0B, 0x8D68, 0x9D49,
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          0x7E97, 0x6EB6, 0x5ED5, 0x4EF4, 0x3E13, 0x2E32, 0x1E51, 0x0E70,
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          0xFF9F, 0xEFBE, 0xDFDD, 0xCFFC, 0xBF1B, 0xAF3A, 0x9F59, 0x8F78,
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          0x9188, 0x81A9, 0xB1CA, 0xA1EB, 0xD10C, 0xC12D, 0xF14E, 0xE16F,
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>          0x1080, 0x00A1, 0x30C2, 0x20E3, 0x5004, 0x4025, 0x7046, 0x6067,
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          0x83B9, 0x9398, 0xA3FB, 0xB3DA, 0xC33D, 0xD31C, 0xE37F, 0xF35E,
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          0x02B1, 0x1290, 0x22F3, 0x32D2, 0x4235, 0x5214, 0x6277, 0x7256,
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          0xB5EA, 0xA5CB, 0x95A8, 0x8589, 0xF56E, 0xE54F, 0xD52C, 0xC50D,
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>          0x34E2, 0x24C3, 0x14A0, 0x0481, 0x7466, 0x6447, 0x5424, 0x4405,
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          0xA7DB, 0xB7FA, 0x8799, 0x97B8, 0xE75F, 0xF77E, 0xC71D, 0xD73C,
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          0x26D3, 0x36F2, 0x0691, 0x16B0, 0x6657, 0x7676, 0x4615, 0x5634,
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          0xD94C, 0xC96D, 0xF90E, 0xE92F, 0x99C8, 0x89E9, 0xB98A, 0xA9AB,
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>          0x5844, 0x4865, 0x7806, 0x6827, 0x18C0, 0x08E1, 0x3882, 0x28A3,
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>          0xCB7D, 0xDB5C, 0xEB3F, 0xFB1E, 0x8BF9, 0x9BD8, 0xABBB, 0xBB9A,
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>          0x4A75, 0x5A54, 0x6A37, 0x7A16, 0x0AF1, 0x1AD0, 0x2AB3, 0x3A92,
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          0xFD2E, 0xED0F, 0xDD6C, 0xCD4D, 0xBDAA, 0xAD8B, 0x9DE8, 0x8DC9,
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          0x7C26, 0x6C07, 0x5C64, 0x4C45, 0x3CA2, 0x2C83, 0x1CE0, 0x0CC1,
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          0xEF1F, 0xFF3E, 0xCF5D, 0xDF7C, 0xAF9B, 0xBFBA, 0x8FD9, 0x9FF8,
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          0x6E17, 0x7E36, 0x4E55, 0x5E74, 0x2E93, 0x3EB2, 0x0ED1, 0x1EF0
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>      };
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>  
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong>[] CRC16_IBM_TABLE = {
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          0x0000, 0xc0c1, 0xc181, 0x0140, 0xc301, 0x03c0, 0x0280, 0xc241,
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          0xc601, 0x06c0, 0x0780, 0xc741, 0x0500, 0xc5c1, 0xc481, 0x0440,
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         0xcc01, 0x0cc0, 0x0d80, 0xcd41, 0x0f00, 0xcfc1, 0xce81, 0x0e40,
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>         0x0a00, 0xcac1, 0xcb81, 0x0b40, 0xc901, 0x09c0, 0x0880, 0xc841,
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>         0xd801, 0x18c0, 0x1980, 0xd941, 0x1b00, 0xdbc1, 0xda81, 0x1a40,
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         0x1e00, 0xdec1, 0xdf81, 0x1f40, 0xdd01, 0x1dc0, 0x1c80, 0xdc41,
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>         0x1400, 0xd4c1, 0xd581, 0x1540, 0xd701, 0x17c0, 0x1680, 0xd641,
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>         0xd201, 0x12c0, 0x1380, 0xd341, 0x1100, 0xd1c1, 0xd081, 0x1040,
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         0xf001, 0x30c0, 0x3180, 0xf141, 0x3300, 0xf3c1, 0xf281, 0x3240,
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>         0x3600, 0xf6c1, 0xf781, 0x3740, 0xf501, 0x35c0, 0x3480, 0xf441,
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>         0x3c00, 0xfcc1, 0xfd81, 0x3d40, 0xff01, 0x3fc0, 0x3e80, 0xfe41,
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>         0xfa01, 0x3ac0, 0x3b80, 0xfb41, 0x3900, 0xf9c1, 0xf881, 0x3840,
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>         0x2800, 0xe8c1, 0xe981, 0x2940, 0xeb01, 0x2bc0, 0x2a80, 0xea41,
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         0xee01, 0x2ec0, 0x2f80, 0xef41, 0x2d00, 0xedc1, 0xec81, 0x2c40,
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>         0xe401, 0x24c0, 0x2580, 0xe541, 0x2700, 0xe7c1, 0xe681, 0x2640,
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>         0x2200, 0xe2c1, 0xe381, 0x2340, 0xe101, 0x21c0, 0x2080, 0xe041,
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>         0xa001, 0x60c0, 0x6180, 0xa141, 0x6300, 0xa3c1, 0xa281, 0x6240,
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>         0x6600, 0xa6c1, 0xa781, 0x6740, 0xa501, 0x65c0, 0x6480, 0xa441,
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>         0x6c00, 0xacc1, 0xad81, 0x6d40, 0xaf01, 0x6fc0, 0x6e80, 0xae41,
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>         0xaa01, 0x6ac0, 0x6b80, 0xab41, 0x6900, 0xa9c1, 0xa881, 0x6840,
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         0x7800, 0xb8c1, 0xb981, 0x7940, 0xbb01, 0x7bc0, 0x7a80, 0xba41,
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>         0xbe01, 0x7ec0, 0x7f80, 0xbf41, 0x7d00, 0xbdc1, 0xbc81, 0x7c40,
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>         0xb401, 0x74c0, 0x7580, 0xb541, 0x7700, 0xb7c1, 0xb681, 0x7640,
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>         0x7200, 0xb2c1, 0xb381, 0x7340, 0xb101, 0x71c0, 0x7080, 0xb041,
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>         0x5000, 0x90c1, 0x9181, 0x5140, 0x9301, 0x53c0, 0x5280, 0x9241,
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>         0x9601, 0x56c0, 0x5780, 0x9741, 0x5500, 0x95c1, 0x9481, 0x5440,
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>         0x9c01, 0x5cc0, 0x5d80, 0x9d41, 0x5f00, 0x9fc1, 0x9e81, 0x5e40,
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>         0x5a00, 0x9ac1, 0x9b81, 0x5b40, 0x9901, 0x59c0, 0x5880, 0x9841,
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>         0x8801, 0x48c0, 0x4980, 0x8941, 0x4b00, 0x8bc1, 0x8a81, 0x4a40,
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>         0x4e00, 0x8ec1, 0x8f81, 0x4f40, 0x8d01, 0x4dc0, 0x4c80, 0x8c41,
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>         0x4400, 0x84c1, 0x8581, 0x4540, 0x8701, 0x47c0, 0x4680, 0x8641,
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>         0x8201, 0x42c0, 0x4380, 0x8341, 0x4100, 0x81c1, 0x8081, 0x4040,
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>     };
+<a class="jxr_linenumber" name="L131" href="#L131">131</a> 
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>     <em class="jxr_comment">// More info: http://reveng.sourceforge.net/crc-catalogue/16.htm</em>
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CRC16_IBM = <span class="jxr_string">"IBM"</span>;
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CRC16_MODBUS = <span class="jxr_string">"MODBUS"</span>;
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CRC16_X25 = <span class="jxr_string">"X-25"</span>;
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CRC16_CCITT_FALSE = <span class="jxr_string">"CCITT-FALSE"</span>;
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CRC16_KERMIT = <span class="jxr_string">"KERMIT"</span>;
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CRC16_XMODEM = <span class="jxr_string">"XMODEM"</span>;
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CRC16_AUG_CCITT = <span class="jxr_string">"AUG-CCITT"</span>;
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CRC16_GENIBUS = <span class="jxr_string">"GENIBUS"</span>;
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String CRC16_MCRF4XX = <span class="jxr_string">"MCRF4XX"</span>;
+<a class="jxr_linenumber" name="L142" href="#L142">142</a> 
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> crc16Unreflected(ByteBuffer buf, <strong class="jxr_keyword">int</strong> crcIn, <strong class="jxr_keyword">int</strong>[] table) {
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>         <strong class="jxr_keyword">int</strong> crc16 = crcIn;
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>         <strong class="jxr_keyword">while</strong> (buf.hasRemaining()) {
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>             crc16 = table[((crc16 &gt;&gt; 8) ^ buf.get()) &amp; 0xff] ^ (crc16 &lt;&lt; 8);
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>         }
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>         <strong class="jxr_keyword">return</strong> crc16 &amp; 0xFFFF;
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>     }
+<a class="jxr_linenumber" name="L150" href="#L150">150</a> 
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> crc16Reflected(ByteBuffer buf, <strong class="jxr_keyword">int</strong> crcIn, <strong class="jxr_keyword">int</strong>[] table) {
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         <strong class="jxr_keyword">int</strong> crc16 = crcIn;
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>         <strong class="jxr_keyword">while</strong> (buf.hasRemaining()) {
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>             crc16 = table[(crc16 ^ buf.get()) &amp; 0xff] ^ (crc16 &gt;&gt; 8);
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>         }
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>         <strong class="jxr_keyword">return</strong> crc16 &amp; 0xFFFF;
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>     }
+<a class="jxr_linenumber" name="L158" href="#L158">158</a> 
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> crc16(String type, ByteBuffer buf) {
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>         <strong class="jxr_keyword">switch</strong> (type) {
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>             <strong class="jxr_keyword">case</strong> CRC16_IBM:
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>                 <strong class="jxr_keyword">return</strong> crc16Reflected(buf, 0, CRC16_IBM_TABLE);
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>             <strong class="jxr_keyword">case</strong> CRC16_MODBUS:
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>                 <strong class="jxr_keyword">return</strong> crc16Reflected(buf, 0xFFFF, CRC16_IBM_TABLE);
+<a class="jxr_linenumber" name="L165" href="#L165">165</a>             <strong class="jxr_keyword">case</strong> CRC16_X25:
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>                 <strong class="jxr_keyword">return</strong> crc16Reflected(buf, 0xFFFF, CRC16_CCITT_TABLE_REVERSE) ^ 0xFFFF;
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>             <strong class="jxr_keyword">case</strong> CRC16_CCITT_FALSE:
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>                 <strong class="jxr_keyword">return</strong> crc16Unreflected(buf, 0xFFFF, CRC16_CCITT_TABLE);
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>             <strong class="jxr_keyword">case</strong> CRC16_KERMIT:
+<a class="jxr_linenumber" name="L170" href="#L170">170</a>                 <strong class="jxr_keyword">return</strong> crc16Reflected(buf, 0, CRC16_CCITT_TABLE_REVERSE);
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>             <strong class="jxr_keyword">case</strong> CRC16_XMODEM:
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>                 <strong class="jxr_keyword">return</strong> crc16Unreflected(buf, 0, CRC16_CCITT_TABLE);
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>             <strong class="jxr_keyword">case</strong> CRC16_AUG_CCITT:
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>                 <strong class="jxr_keyword">return</strong> crc16Unreflected(buf, 0x1d0f, CRC16_CCITT_TABLE);
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>             <strong class="jxr_keyword">case</strong> CRC16_GENIBUS:
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>                 <strong class="jxr_keyword">return</strong> crc16Unreflected(buf, 0xFFFF, CRC16_CCITT_TABLE) ^ 0xFFFF;
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>             <strong class="jxr_keyword">case</strong> CRC16_MCRF4XX:
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>                 <strong class="jxr_keyword">return</strong> crc16Reflected(buf, 0xFFFF, CRC16_CCITT_TABLE_REVERSE);
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>             <strong class="jxr_keyword">default</strong>:
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> UnsupportedOperationException(type);
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>         }
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>     }
+<a class="jxr_linenumber" name="L183" href="#L183">183</a> 
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> crc32(ByteBuffer buf) {
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>         CRC32 checksum = <strong class="jxr_keyword">new</strong> CRC32();
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>         <strong class="jxr_keyword">while</strong> (buf.hasRemaining()) {
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>             checksum.update(buf.get());
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>         }
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>         <strong class="jxr_keyword">return</strong> (<strong class="jxr_keyword">int</strong>) checksum.getValue();
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>     }
+<a class="jxr_linenumber" name="L191" href="#L191">191</a> 
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> xor(ByteBuffer buf) {
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>         <strong class="jxr_keyword">int</strong> checksum = 0;
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>         <strong class="jxr_keyword">while</strong> (buf.hasRemaining()) {
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>             checksum ^= buf.get();
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>         }
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>         <strong class="jxr_keyword">return</strong> checksum;
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>     }
+<a class="jxr_linenumber" name="L199" href="#L199">199</a> 
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> xor(String string) {
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>         byte checksum = 0;
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>         <strong class="jxr_keyword">for</strong> (byte b : string.getBytes(StandardCharsets.US_ASCII)) {
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>             checksum ^= b;
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>         }
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>         <strong class="jxr_keyword">return</strong> checksum;
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>     }
+<a class="jxr_linenumber" name="L207" href="#L207">207</a> 
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String nmea(String msg) {
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>         <strong class="jxr_keyword">int</strong> checksum = 0;
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>         byte[] bytes = msg.getBytes(StandardCharsets.US_ASCII);
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 1; i &lt; bytes.length; i++) {
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>             checksum ^= bytes[i];
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>         }
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>         <strong class="jxr_keyword">return</strong> String.format(<span class="jxr_string">"*%02x"</span>, checksum).toUpperCase();
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>     }
+<a class="jxr_linenumber" name="L216" href="#L216">216</a> 
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String sum(String msg) {
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>         byte checksum = 0;
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>         <strong class="jxr_keyword">for</strong> (byte b : msg.getBytes(StandardCharsets.US_ASCII)) {
+<a class="jxr_linenumber" name="L220" href="#L220">220</a>             checksum += b;
+<a class="jxr_linenumber" name="L221" href="#L221">221</a>         }
+<a class="jxr_linenumber" name="L222" href="#L222">222</a>         <strong class="jxr_keyword">return</strong> String.format(<span class="jxr_string">"%02X"</span>, checksum).toUpperCase();
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>     }
+<a class="jxr_linenumber" name="L224" href="#L224">224</a> 
+<a class="jxr_linenumber" name="L225" href="#L225">225</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">long</strong> luhn(<strong class="jxr_keyword">long</strong> imei) {
+<a class="jxr_linenumber" name="L226" href="#L226">226</a>         <strong class="jxr_keyword">long</strong> checksum = 0;
+<a class="jxr_linenumber" name="L227" href="#L227">227</a>         <strong class="jxr_keyword">long</strong> remain = imei;
+<a class="jxr_linenumber" name="L228" href="#L228">228</a> 
+<a class="jxr_linenumber" name="L229" href="#L229">229</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; remain != 0; i++) {
+<a class="jxr_linenumber" name="L230" href="#L230">230</a>             <strong class="jxr_keyword">long</strong> digit = remain % 10;
+<a class="jxr_linenumber" name="L231" href="#L231">231</a> 
+<a class="jxr_linenumber" name="L232" href="#L232">232</a>             <strong class="jxr_keyword">if</strong> (i % 2 == 0) {
+<a class="jxr_linenumber" name="L233" href="#L233">233</a>                 digit *= 2;
+<a class="jxr_linenumber" name="L234" href="#L234">234</a>                 <strong class="jxr_keyword">if</strong> (digit &gt;= 10) {
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>                     digit = 1 + (digit % 10);
+<a class="jxr_linenumber" name="L236" href="#L236">236</a>                 }
+<a class="jxr_linenumber" name="L237" href="#L237">237</a>             }
+<a class="jxr_linenumber" name="L238" href="#L238">238</a> 
+<a class="jxr_linenumber" name="L239" href="#L239">239</a>             checksum += digit;
+<a class="jxr_linenumber" name="L240" href="#L240">240</a>             remain /= 10;
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>         }
+<a class="jxr_linenumber" name="L242" href="#L242">242</a> 
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>         <strong class="jxr_keyword">return</strong> (10 - (checksum % 10)) % 10;
+<a class="jxr_linenumber" name="L244" href="#L244">244</a>     }
+<a class="jxr_linenumber" name="L245" href="#L245">245</a> 
+<a class="jxr_linenumber" name="L246" href="#L246">246</a> }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

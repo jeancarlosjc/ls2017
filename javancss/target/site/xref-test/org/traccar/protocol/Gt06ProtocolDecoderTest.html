@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Gt06ProtocolDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/Gt06ProtocolDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/Gt06ProtocolDecoderTest.html">Gt06ProtocolDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>       @Test
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>       <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecode() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>          Gt06ProtocolDecoder decoder = <strong class="jxr_keyword">new</strong> Gt06ProtocolDecoder(<strong class="jxr_keyword">new</strong> Gt06Protocol());
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>                  <span class="jxr_string">"787805120099abec0d0a"</span>));
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>          verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>                  <span class="jxr_string">"78780D01086471700328358100093F040D0A"</span>));
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>          verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>                  <span class="jxr_string">"7878121011091c0b1b2999058508040097a89e0034520d0a"</span>));
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>                  <span class="jxr_string">"78780869170928113413ac9e17b30808514494fcf6e148596cb0ce2c67bd4a6eb0ce2c67bd4b0018e7d4333e55ec086be7f2df5fe48d8c94fc6657e48d8cb8f378510600cc0400d37a3d4600d37a3c5000d37a3b6400d376716400d305ac6400d393506e0d0a"</span>));
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>                  <span class="jxr_string">"787808171709281135331491827b75594dc8d719a9708452cad719a9708550cad719a97086521491827b75574cac9e17b308085dc8d71939633947cad71939633a480700cc0400d37a3d5a00d37a3d5a00d37a3d5a00d37a3d5a00d37a3d5a00d37a3d5a00d37a3d5a0d0a"</span>));
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>          verifyNotNull(decoder, binary(
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>                  <span class="jxr_string">"78783b281108111002050136041bcf0000bf09000000000000000000000000000000000000000000000000000000000000000000000000ff00020007d3280d0a"</span>));
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          verifyNotNull(decoder, binary(
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>                  <span class="jxr_string">"7878412c11030b011c1f013604cb8a00b17754cb8a00bef357cb8a00b73f5fcb8900b0e25fcb8900b6655fcb8a00b74960cb8a00b178620701001801eb40393800bbbde10d0a"</span>));
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          verifyNotNull(decoder, binary(
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>                  <span class="jxr_string">"7878412c11030b012629013604cb8a00b17757cb8a00b73f5bcb8a00b7495ecb8900b0e25fcb8a00b1b9620000000000ff0000000000ffff01001801eb40393e00c0e6340d0a"</span>));
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>                  <span class="jxr_string">"787822221106160a1016c60278019407c7783800040001940504700046fc01030100065f570d0a"</span>));
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>                  <span class="jxr_string">"797900143311070609020b00000000a0030046000109e4610d0a"</span>));
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>                  <span class="jxr_string">"7979003e32110707083819000901fe0a060f006a1e3f24000000000000000000000000000000000000000000000000000000000000000000000000000000012116ba0d0a"</span>));
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>                  <span class="jxr_string">"7979007632110706090217000901fe0a060f006a1c2024060f0053a429060f006a1d21060f0053a720060f006f151d0000000000000000000000003844d9e7f7e1773d60e327a9e442405cf28628b9c640a42bb0fc0d0244d855a38c220a4c802aa8da7dab50b0e235ef32dd5348ee0ce77a52540000010a205a0d0a"</span>));
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>                  <span class="jxr_string">"7979006f210000000001426174746572793a352e3536562c4e4f524d414c3b20475052532a4c696e6b2055702047534d205369676e616c204c6576656c3a5374726f6e673b204750533a4f46463b2020204c4f434b3a4f46463b204254204d41433a4234413832383034343436323b007260880d0a"</span>));
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>                  <span class="jxr_string">"7979004a321106170c1b180cc900a875580b7ab4f00010350901fe0a007c0009112424007c000912240081004efe2100c500100f1200000000000000000000000000000000000000000000bc7c900d0a"</span>));
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          verifyNotNull(decoder, binary(
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>                  <span class="jxr_string">"79790045321106170c1b13000901fe0a007c0009112424007c000912230081004efe1e00c500100f120000000000000000000000000000000000000710bef565574e37000000b26f140d0a"</span>));
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>                  <span class="jxr_string">"787811010863586038760942a0010000010aa4000d0a"</span>));
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  <span class="jxr_string">"78781f3511061a0b24330503107d06084889cb01000100000cfa20e3acd301333fcb0d0a"</span>));
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>                  <span class="jxr_string">"78783c340000000011061809130c0903107d2408488a5800144c00000000000001940b00b1000047ff000000000500018f42210000000100050003010b69450d0a"</span>));
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>                  <span class="jxr_string">"78783c34000000001106190336070903107d51084889b900152e0000000043b101940b00b10000480100000000050001a3422100000001000300011bdc7b5f0d0a"</span>));
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>          verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>                  <span class="jxr_string">"78780a13c40604000201298f5b0d0a"</span>));
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          verifyNotNull(decoder, binary(
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>                  <span class="jxr_string">"78781f12110616091835d0024bb93007d3fb783dd4c501940500f2006c8504a6e0370d0a"</span>));
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>                  <span class="jxr_string">"787822221106160a1016c60278019407c7783800040001940504700046fc01030100065f570d0a"</span>));
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          verifyNotNull(decoder, binary(
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>                  <span class="jxr_string">"7878661500000000004459443d537563636573732100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010009e82b0d0a"</span>));
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>  
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>                  <span class="jxr_string">"7979000894000000000338ba0d0a"</span>));
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>  
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>                  <span class="jxr_string">"79790020940a03516080825457290502194200448892980691312079088572f50004d4350d0a"</span>));
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>  
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>          verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>                  <span class="jxr_string">"7979007121000000000143757272656e7420706f736974696f6e214c61743a4e35342e3733393333322c4c6f6e3a4532352e3237333237302c436f757273653a3132362e35332c53706565643a302e303030302c4461746554696d653a323031372d30352d3236202031303a32373a3437000bbee30d0a"</span>));
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>                  <span class="jxr_string">"7979003F940D110315102A202141494F494C2C30322C3030382E3239302C3032392E3630302C3531394A2C303430302C3030382E3433302C302C30302C4142001678EA0D0A"</span>));
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>  
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>                  <span class="jxr_string">"79790005840016BB1A0D0A"</span>));
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>  
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>                  <span class="jxr_string">"797900089400000002e852d70d0a"</span>));
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>  
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>                 <span class="jxr_string">"7979000794050000c9b63e0d0a"</span>));
+<a class="jxr_linenumber" name="L102" href="#L102">102</a> 
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         verifyNotNull(decoder, binary(
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>                 <span class="jxr_string">"78783b18100c0f1201010195271784005ab63617840002fa47178400ff8f4817840019f3491784005ab54b178400ff8e4c17840019f24cff0002012287c80d0a"</span>));
+<a class="jxr_linenumber" name="L105" href="#L105">105</a> 
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>                 <span class="jxr_string">"7878251610051b0f1c34c5022515d504b5dcd20738080902d4022bdf009cba5006640201006759680d0a"</span>));
+<a class="jxr_linenumber" name="L108" href="#L108">108</a> 
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>         verifyNotNull(decoder, binary(
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>                 <span class="jxr_string">"787866150000000000416c726561647920696e20746865207374617465206f66206675656c20737570706c7920746f20726573756d652c74686520636f6d6d616e64206973206e6f742072756e6e696e672100000000000000000000000000000000000001001981e50d0a"</span>));
+<a class="jxr_linenumber" name="L111" href="#L111">111</a> 
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>         verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>                 <span class="jxr_string">"78782d152500000000437574206f666620746865206675656c20737570706c793a2053756363657373210002013b898a0d0a"</span>));
+<a class="jxr_linenumber" name="L114" href="#L114">114</a> 
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>         verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>                 <span class="jxr_string">"787829152100000000526573746f7265206675656c20737570706c793a2053756363657373210002014077ce0d0a"</span>));
+<a class="jxr_linenumber" name="L117" href="#L117">117</a> 
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>                 <span class="jxr_string">"78780D01012345678901234500018CDD0D0A"</span>));
+<a class="jxr_linenumber" name="L120" href="#L120">120</a> 
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>         verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>                 <span class="jxr_string">"78780d0103534190360660610003c3df0d0a"</span>));
+<a class="jxr_linenumber" name="L123" href="#L123">123</a> 
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>         verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>                 <span class="jxr_string">"78780a13440604000201baaf540d0a"</span>));
+<a class="jxr_linenumber" name="L126" href="#L126">126</a> 
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>         verifyAttributes(decoder, binary(
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>                 <span class="jxr_string">"787825160F0C1D0A2B21C8027AC8040C46581000146F0901CC00287D001F714804040301001C84CF0D0A"</span>));
+<a class="jxr_linenumber" name="L129" href="#L129">129</a> 
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>                 <span class="jxr_string">"78781f120f0a140e150bc505e51e780293a9e800540000f601006e0055da00035f240d0a"</span>),
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>                 position(<span class="jxr_string">"2015-10-20 14:21:11.000"</span>, <strong class="jxr_keyword">true</strong>, 54.94535, 24.01762));
+<a class="jxr_linenumber" name="L133" href="#L133">133</a> 
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>                 <span class="jxr_string">"787823120f081b121d37cb01c8e2cc08afd3c020d50201940701d600a1190041ee100576d1470d0a"</span>));
+<a class="jxr_linenumber" name="L136" href="#L136">136</a> 
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>                 <span class="jxr_string">"78781F120B081D112E10CC027AC7EB0C46584900148F01CC00287D001FB8000380810D0A"</span>));
+<a class="jxr_linenumber" name="L139" href="#L139">139</a> 
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>                 <span class="jxr_string">"787819100B031A0B1B31CC027AC7FD0C4657BF0115210001001CC6070D0A"</span>));
+<a class="jxr_linenumber" name="L142" href="#L142">142</a> 
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>                 <span class="jxr_string">"787821120C010C0F151FCF027AC8840C4657EC00140001CC00287D001F720001000F53A00D0A"</span>));
+<a class="jxr_linenumber" name="L145" href="#L145">145</a> 
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>                 <span class="jxr_string">"787825160B051B093523CF027AC8360C4657B30014000901CC00266A001E1740050400020008D7B10D0A"</span>));
+<a class="jxr_linenumber" name="L148" href="#L148">148</a> 
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>                 <span class="jxr_string">"787819100e010903230ec803ae32a60653cded00180000020072feb70d0a"</span>));
+<a class="jxr_linenumber" name="L151" href="#L151">151</a> 
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>                 <span class="jxr_string">"7878471e0e03110b0511c501c664fd074db73f0218a602e003433a002fed40433a0056e14e433a0056104e433a0056fd53433a002eed55433a007e4b57433a002ee25aff00020120f6720d0a"</span>));
+<a class="jxr_linenumber" name="L154" href="#L154">154</a> 
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>         verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>                 <span class="jxr_string">"7979005bfd0358899050927725004c0020bf984358df603b2ea3a339e54335013a5b56455253494f4e5d47543036445f32305f3630444d325f423235455f5631355f574d5b4255494c445d323031332f31322f32382031353a3234002a3b240d0a7979005bfd0358899050927725004c0020bf984358df603b2ea3a339e54335013a5b56455253494f4e5d47543036445f32305f3630444d325f423235455f5631355f574d5b4255494c445d323031332f31322f32382031353a3234002d4f9b0d0a7979005bfd0358899050927725004c0020bf984358df603b2ea3a339e54335013a5b56455253494f4e5d47543036445f32305f3630444d325f423235455f5631355f574d5b4255494c445d323031332f31322f32382031353a3234003084ff0d0a"</span>));
+<a class="jxr_linenumber" name="L157" href="#L157">157</a> 
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>         verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>                 <span class="jxr_string">"78788b818300000000534545464e2626004f04220045042626262b37393035343031353534362626262626260410041b0415041a04210415041926262b373930363433333031313526260410043d044f26262b373936303437383430363426260412043e0432043026262b373932383834373738383126262626262626262626262626262626232300020022155d0d0a"</span>));
+<a class="jxr_linenumber" name="L160" href="#L160">160</a> 
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>                 <span class="jxr_string">"787822220e0914160f07c9021a362805090a7800d8b802d402c30e00a98a0105010213f4bb0d0a"</span>));
+<a class="jxr_linenumber" name="L163" href="#L163">163</a> 
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>         verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L165" href="#L165">165</a>                 <span class="jxr_string">"787811010864717003664467100f190a0002c6d20d0a"</span>));
+<a class="jxr_linenumber" name="L166" href="#L166">166</a> 
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>         verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>                 <span class="jxr_string">"787811010123456789012345100B3201000171930D0A"</span>));
+<a class="jxr_linenumber" name="L169" href="#L169">169</a> 
+<a class="jxr_linenumber" name="L170" href="#L170">170</a>         verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>                 <span class="jxr_string">"78780d1f000000000000000200b196a20d0a"</span>));
+<a class="jxr_linenumber" name="L172" href="#L172">172</a> 
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>                 <span class="jxr_string">"78781f12110819110216d402f250340828924055d4c801944600d300c09501429c830d0a"</span>));
+<a class="jxr_linenumber" name="L175" href="#L175">175</a> 
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>         verifyPosition(decoder, binary(
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>                 <span class="jxr_string">"78782516110819110208d402f264dc08289a4058d4c70901944600d300c0954606040600014057e90d0a"</span>));
+<a class="jxr_linenumber" name="L178" href="#L178">178</a> 
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>         verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>                 <span class="jxr_string">"78780d010359339075005244340d0a"</span>));
+<a class="jxr_linenumber" name="L181" href="#L181">181</a> 
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>                 <span class="jxr_string">"787800691709261259400700cc0400d376714600d37a3d5000d37a3c5000d393505a00d3765d5a00d376735a00d32e6b640d0a"</span>));
+<a class="jxr_linenumber" name="L184" href="#L184">184</a> 
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>         verifyNull(decoder, binary(
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>                 <span class="jxr_string">"787801080d0a"</span>));
+<a class="jxr_linenumber" name="L187" href="#L187">187</a> 
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>     }
+<a class="jxr_linenumber" name="L189" href="#L189">189</a> 
+<a class="jxr_linenumber" name="L190" href="#L190">190</a> }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>

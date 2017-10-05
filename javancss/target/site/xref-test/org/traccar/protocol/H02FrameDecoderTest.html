@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>H02FrameDecoderTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/org/traccar/protocol/H02FrameDecoderTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.traccar.protocol;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.junit.Assert;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> org.junit.Test;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <strong class="jxr_keyword">import</strong> org.traccar.ProtocolTest;
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/traccar/protocol/H02FrameDecoderTest.html">H02FrameDecoderTest</a> <strong class="jxr_keyword">extends</strong> <a href="../../../org/traccar/ProtocolTest.html">ProtocolTest</a> {
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>       @Test
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecodeShort() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>          H02FrameDecoder decoder = <strong class="jxr_keyword">new</strong> H02FrameDecoder(0);
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>          Assert.assertEquals(
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>                  binary(<span class="jxr_string">"2a48512c3335353438383032303131333931312c56312c3031323934352c412c353233312e37393238332c4e2c30313332342e31303731382c452c302e30352c302c3137303231372c464646464646464623"</span>),
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(<span class="jxr_string">"2a48512c3335353438383032303131333931312c56312c3031323934352c412c353233312e37393238332c4e2c30313332342e31303731382c452c302e30352c302c3137303231372c4646464646464646230d0a"</span>)));
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>          Assert.assertEquals(
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>                  binary(<span class="jxr_string">"2441060116601245431311165035313006004318210e000000fffffbffff0024"</span>),
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(<span class="jxr_string">"2441060116601245431311165035313006004318210e000000fffffbffff0024"</span>)));
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          Assert.assertEquals(
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>                  binary(<span class="jxr_string">"2441060116601245431311165035313006004318210e000000fffffbffff0024"</span>),
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(<span class="jxr_string">"2441060116601245431311165035313006004318210e000000fffffbffff00242a48512c343130363031313636302c56312c3132343535322c412c353033352e333132392c4e2c30303433312e383231312c452c3030302e32302c3030302c3133313131362c464646464642464623"</span>)));
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>          Assert.assertEquals(
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>                  binary(<span class="jxr_string">"2a48512c3335333538383036303031353536382c56312c3139333530352c412c3830392e303031302c532c333435342e383939372c572c302e30302c302e30302c3239313031332c65666666666266662c3030303264342c3030303030622c3030353338352c3030353261612c323523"</span>),
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(<span class="jxr_string">"2a48512c3335333538383036303031353536382c56312c3139333530352c412c3830392e303031302c532c333435342e383939372c572c302e30302c302e30302c3239313031332c65666666666266662c3030303264342c3030303030622c3030353338352c3030353261612c323523"</span>)));
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>          Assert.assertEquals(
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>                  binary(<span class="jxr_string">"24430025645511183817091319355128000465632432000100ffe7fbffff0000"</span>),
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(<span class="jxr_string">"24430025645511183817091319355128000465632432000100ffe7fbffff0000"</span>)));
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      }
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      @Test
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecodeLong() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          H02FrameDecoder decoder = <strong class="jxr_keyword">new</strong> H02FrameDecoder(0);
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>          Assert.assertEquals(
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>                  binary(<span class="jxr_string">"24410600082621532131081504419390060740418306000000fffffbfdff0015060000002c02dc0c000000001f"</span>),
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(<span class="jxr_string">"24410600082621532131081504419390060740418306000000fffffbfdff0015060000002c02dc0c000000001f"</span>)));
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      }
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      @Test
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDecodeAlternative() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          H02FrameDecoder decoder = <strong class="jxr_keyword">new</strong> H02FrameDecoder(0);
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          Assert.assertEquals(
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>                  binary(<span class="jxr_string">"2a48512c343230363131393133302c4e42522c3130323430332c3233382c312c302c372c313131312c323236342c36332c313131312c323236352c35382c313131312c323236362c35302c313131312c333133352c33372c313131312c3630352c33332c313131312c343932302c33302c313131312c3630372c32382c3131303131372c46464646444646462c3623"</span>),
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(<span class="jxr_string">"2a48512c343230363131393133302c4e42522c3130323430332c3233382c312c302c372c313131312c323236342c36332c313131312c323236352c35382c313131312c323236362c35302c313131312c333133352c33372c313131312c3630352c33332c313131312c343932302c33302c313131312c3630372c32382c3131303131372c46464646444646462c3623"</span>)));
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>          Assert.assertEquals(
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>                  binary(<span class="jxr_string">"2442061191301024031101175540227006012321670c000095fffffbffff001f00000001f800ee010000000032"</span>),
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(<span class="jxr_string">"2442061191301024031101175540227006012321670c000095fffffbffff001f00000001f800ee010000000032"</span>)));
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          Assert.assertEquals(
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>                  binary(<span class="jxr_string">"5800009814991024031101175540227006012321670c000095fffffbffff0033"</span>),
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(<span class="jxr_string">"5800009814991024031101175540227006012321670c000095fffffbffff0033"</span>)));
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          Assert.assertEquals(
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>                  binary(<span class="jxr_string">"2a48512c343230363131393133302c4e42522c3130323431362c3233382c312c302c372c313131312c323236342c35332c313131312c323236352c36302c313131312c323236362c34342c313131312c333133352c34332c313131312c3630352c33392c313131312c343932302c32392c313131312c3630372c32342c3131303131372c46464646464246462c3623"</span>),
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>                  decoder.decode(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, binary(<span class="jxr_string">"2a48512c343230363131393133302c4e42522c3130323431362c3233382c312c302c372c313131312c323236342c35332c313131312c323236352c36302c313131312c323236362c34342c313131312c333133352c34332c313131312c3630352c33392c313131312c343932302c32392c313131312c3630372c32342c3131303131372c46464646464246462c3623"</span>)));
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      }
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2017. All rights reserved.</div>
+</body>
+</html>
